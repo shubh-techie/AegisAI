@@ -179,3 +179,36 @@ not committed. No research experiments or measurements were performed.
 are not research outcomes. **PLANNED**: dynamic evidence with provenance/freshness,
 resource enforcement, audit, measurement tooling, and Models C/D. No AI, behavioral
 anomaly detection, or contextual risk scoring was implemented.
+
+## 2026-09-23 — AEGISAI-007: Deterministic contextual risk
+
+Status: **IMPLEMENTED** experimental Model C software in working tree; pending
+review and not committed. No research runs or performance measurements performed.
+
+- Read AGENTS.md, relevant authorization specifications and ADRs, system architecture,
+  and existing implementation records. Began from clean branch at `f5965d7`.
+- Added immutable normalized RiskContext and five explicitly simulated indicators;
+  the fixed decimal weighted sum provides score, level, versions, and per-signal
+  contributions/reasons. This is a deterministic heuristic, not AI or ML.
+- Added Application risk/provider abstractions and Model C composition. RBAC/ABAC
+  denial skips risk evaluation; missing indicators remain Unknown and force denial.
+- Added ALLOW, DENY, STEP_UP, and LIMIT recommendations with explicit stronger-
+  authentication/reevaluation or rate-cap obligations. No enforcement is claimed.
+- Added trusted request-bound Infrastructure snapshots and authenticated
+  POST /authorization/evaluate/model-c. Models A/B retain their behavior.
+- Added SPEC-007, ADR-004, synthetic configuration examples, and current summaries.
+- Tests cover levels, exact/below-threshold boundaries, normalized explanations,
+  each missing signal, full missing context, invalid inputs, immutability, provider
+  failure, baseline short-circuiting, four HTTP outcomes, and context binding.
+- Integration tests caught null numeric configuration binding as zero. Replaced
+  generic signal binding with explicit scalar parsing preserving unknown values;
+  the regression test now passes.
+- Final dotnet build passed with zero warnings/errors. All 140 tests passed:
+  14 Domain, 53 Application, 69 integration, 4 architecture; zero failed/skipped.
+- Local documentation links and git diff --check passed. HEAD and the historical
+  legacy checkpoint are unchanged; no commit or push performed.
+
+**EXPERIMENTAL**: hand-specified contextual risk software and synthetic fixtures;
+no trained model, behavioral detection, measured assurance, or research findings.
+**PLANNED**: verified live context, freshness/provenance, recent authorization
+history if justified, challenge/rate enforcement, audit, and research measurements.

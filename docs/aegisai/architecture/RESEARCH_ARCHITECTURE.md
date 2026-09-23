@@ -7,7 +7,8 @@ IMPLEMENTED: this research design document and the software foundation described
 in [SPEC-002](../specs/SPEC-002-SOLUTION-FOUNDATION.md).
 IMPLEMENTED experimental software: [Model A RBAC](../specs/SPEC-005-RBAC.md) and
 [Model B RBAC + ABAC](../specs/SPEC-006-ABAC.md).
-PLANNED: Models C/D, workloads, datasets, experiment runners, scorers, and measurements.
+IMPLEMENTED experimental software: [Model C contextual risk](../specs/SPEC-007-CONTEXTUAL-RISK.md).
+PLANNED: Model D, workloads, datasets, experiment runners, scorers, and measurements.
 No research results, benchmark values, datasets, trained models, or publications
 are claimed. These comparisons are questions to test, not evidence of improvement.
 

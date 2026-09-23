@@ -8,8 +8,8 @@ The .NET 8 foundation now includes the authentication baseline in
 provider-neutral identity boundary. [SPEC-005](../specs/SPEC-005-RBAC.md) adds the
 experimental Model A RBAC decision engine. [SPEC-006](../specs/SPEC-006-ABAC.md)
 adds Model B with independently testable ABAC and trusted static attribute snapshots.
-Risk, audit, protected resource
-enforcement, and provider deployment integration remain PLANNED. The following design is the target specified by [SPEC-003](../specs/SPEC-003-AEGISAI-ARCHITECTURE.md).
+[SPEC-007](../specs/SPEC-007-CONTEXTUAL-RISK.md) adds deterministic contextual risk
+and four decision outcomes in Model C. Audit, protected resource enforcement, and provider deployment integration remain PLANNED. The following design is the target specified by [SPEC-003](../specs/SPEC-003-AEGISAI-ARCHITECTURE.md).
 
 ## Request decision flow
 

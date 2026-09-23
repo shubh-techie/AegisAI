@@ -7,10 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAegisAuthentication(builder.Configuration);
 builder.Services.AddRbacBaseline();
 builder.Services.AddAbacBaseline();
+builder.Services.AddContextualRisk();
 var app = builder.Build();
 // Validate and freeze policy after all host configuration providers have been applied.
 _ = app.Services.GetRequiredService<IRbacPolicyProvider>();
 _ = app.Services.GetRequiredService<IAbacContextProvider>();
+_ = app.Services.GetRequiredService<IRiskContextProvider>();
 
 app.UseAuthentication();
 app.UseAuthorization();
