@@ -3,6 +3,15 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# JetBrains Rider / IntelliJ
+.idea/
+*.sln.iml
+
 # User-specific files
 *.rsuser
 *.suo
@@ -30,6 +39,8 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+logs/
+*.log.*
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -60,6 +71,20 @@ BenchmarkDotNet.Artifacts/
 project.lock.json
 project.fragment.lock.json
 artifacts/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+appsettings.Local.json
+appsettings.*.Local.json
+secrets.json
+*.secrets.json
+*.jwk
+*.pfx
+*.p12
+*.pem
+*.key
 
 # StyleCop
 StyleCopReport.xml
