@@ -41,7 +41,7 @@ Audit / Telemetry / Security Events
 
 ## IMPLEMENTED — Repository foundation
 
-Only documentation and directory placeholders exist. The legacy application has
+AEGISAI-002 provides a .NET 8 Clean Architecture solution and minimal health API. The legacy application has
 been removed from the current working tree and will not be reused. New .NET 8
 code must follow Clean Architecture and SOLID, with meaningful automated tests.
 
@@ -83,7 +83,7 @@ Target technologies:
 - Docker Compose
 - Kubernetes later
 
-These technologies are PLANNED candidates; .NET 8 is the required .NET target. No runtime or infrastructure is implemented yet.
+These technologies are PLANNED candidates; .NET 8 is the required .NET target. Only the .NET 8 solution and health endpoint are implemented; infrastructure integrations remain PLANNED.
 
 ## Target Service Boundaries
 

@@ -2,8 +2,7 @@
 
 **Historical snapshot, superseded by AEGISAI-001 (2026-09-23).** The descriptions
 below refer to the legacy checkpoint before removal, not the current working tree.
-The current foundation contains documentation and placeholders only; no application
-or solution exists. Legacy code will not be reused. See [README](../../README.md).
+AEGISAI-002 adds a .NET 8 solution and minimal health API. Legacy code will not be reused. See [README](../../README.md).
 
 This document records what is currently present in the repository at the start of the AegisAI foundation branch. It intentionally separates existing implementation from planned AegisAI work.
 
