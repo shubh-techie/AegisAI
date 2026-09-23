@@ -38,10 +38,10 @@ Initial research questions:
 
 AegisAI should eventually support reproducible experiments comparing:
 
-- Baseline A: RBAC
-- Baseline B: RBAC + ABAC
+- Model A: RBAC
+- Model B: RBAC + ABAC
 - Model C: RBAC + ABAC + contextual risk
-- Model D: RBAC + ABAC + behavioral/AI risk
+- Model D: RBAC + ABAC + behavioral AI risk
 
 These models are planned. They are not implemented in the current codebase.
 
@@ -82,3 +82,9 @@ AegisAI should avoid overstating AI capability. Research outputs should identify
 - Where automated response could disrupt legitimate users.
 - Where human review is required.
 - Where test data does not represent production behavior.
+
+## Detailed experimental plan
+
+[Research Architecture](architecture/RESEARCH_ARCHITECTURE.md) defines controlled
+comparisons, metric boundaries, independent labels, and future behavioral analysis.
+These are EXPERIMENTAL plans only; no experiments or results exist.

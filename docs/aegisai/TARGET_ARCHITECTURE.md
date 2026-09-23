@@ -2,42 +2,30 @@
 
 This document describes the intended AegisAI architecture. It is a target direction, not the current implementation.
 
+## Detailed design
+
+[System Architecture](architecture/SYSTEM_ARCHITECTURE.md) defines the complete
+request flow and enforcement semantics. [Research Architecture](architecture/RESEARCH_ARCHITECTURE.md)
+separately defines future behavioral anomaly detection and Models A–D.
+[Threat Model V1](threat-model/THREAT_MODEL_V1.md) records proposed controls.
+All target capabilities remain PLANNED; no experiments have run.
+
 ## Target Flow
 
-```text
-Client
-  |
-  v
-API Gateway
-  |
-  v
-OIDC / JWT Authentication
-  |
-  v
-Authorization Engine
-  |
-  +-- RBAC
-  +-- ABAC
-  +-- Context
-  |
-  v
-Risk Engine
-  |
-  +-- Contextual Risk
-  +-- Behavioral Signals
-  +-- Anomaly Detection
-  |
-  v
-Policy Decision Engine
-  |
-  +-- ALLOW
-  +-- DENY
-  +-- STEP_UP
-  +-- LIMIT
-  |
-  v
-Audit / Telemetry / Security Events
+```mermaid
+flowchart TD
+    Client --> Gateway[API Gateway]
+    Gateway --> Authentication
+    Authentication --> Authorization[Authorization Engine]
+    Authorization --> RBAC --> ABAC --> Context
+    Context --> Risk[Risk Engine]
+    Risk --> Policy[Policy Decision Engine]
+    Policy --> Outcomes[ALLOW / DENY / STEP_UP / LIMIT]
+    Outcomes --> Audit[Audit / Security Events]
 ```
+
+Future behavioral analysis is a separate optional evidence pipeline, not an
+implemented component of this request flow.
 
 ## IMPLEMENTED — Repository foundation
 

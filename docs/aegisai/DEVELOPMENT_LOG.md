@@ -55,3 +55,36 @@ Status: **IMPLEMENTED** in the working tree; pending review and not committed.
 **PLANNED**: business behavior and its unit tests, infrastructure adapters,
 authorization, risk assessment, telemetry, and deployment.
 **EXPERIMENTAL**: none; no research results, benchmarks, or datasets produced.
+
+## 2026-09-23 — AEGISAI-003: Research and system architecture
+
+Status: **IMPLEMENTED** documentation in the working tree; pending review and
+not committed. All described system extensions remain **PLANNED**.
+
+- Read AGENTS.md and every existing docs/aegisai file before making changes.
+- Began from clean `feature/aegisai-foundation` at `1714765`, the committed
+  AEGISAI-002 foundation; retained the prior entries as historical task records.
+- Added SPEC-003, System Architecture, Research Architecture, and Threat Model V1
+  with Mermaid diagrams for request evaluation, project dependencies, experimental
+  comparison, future behavioral analysis, and trust boundaries.
+- Defined the full target flow, decision outcomes, enforcement obligations,
+  evidence contracts, failure handling, and Clean Architecture responsibilities.
+- Defined Models A–D and intended latency, throughput, FPR, FNR, risk classification,
+  detection-time, and response-time measurements. Specified ground truth,
+  denominators, unknown/not-applicable cases, censoring, and reproducibility.
+- Separated future behavioral anomaly detection from the core request path and
+  documented data/model integrity, privacy, and threats to experimental validity.
+- Recorded planned threat controls, future verification, and residual risks;
+  no controls are claimed implemented by this documentation task.
+- Aligned existing target-architecture and research-scope summaries with the new
+  documents; removed placeholders from the now-populated architecture and
+  threat-model directories. Application source and tests are unchanged.
+- Validation: dotnet test completed successfully with its normal restore/build
+  steps; four architecture and two integration tests passed, zero failed/skipped.
+  Domain/Application test projects still contain no cases, as previously documented.
+- Local Markdown links, balanced code fences, Mermaid block presence, and
+  git diff --check passed. Diagrams were inspected as source, not renderer-tested.
+- HEAD and the legacy checkpoint remain unchanged; no commit or push performed.
+
+**EXPERIMENTAL**: plans only. No experiments, research findings, benchmark values,
+datasets, or citations were fabricated or produced.
