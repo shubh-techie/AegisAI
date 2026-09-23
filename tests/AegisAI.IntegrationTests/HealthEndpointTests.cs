@@ -29,11 +29,11 @@ public sealed class HealthEndpointTests : IClassFixture<WebApplicationFactory<Pr
     }
 
     [Fact]
-    public async Task Unmapped_route_returns_not_found()
+    public async Task Unmapped_route_requires_authentication_by_default()
     {
         using var client = _factory.CreateClient();
         using var response = await client.GetAsync("/not-an-endpoint");
 
-        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
     }
 }

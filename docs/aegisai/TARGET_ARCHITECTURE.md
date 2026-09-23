@@ -8,7 +8,7 @@ This document describes the intended AegisAI architecture. It is a target direct
 request flow and enforcement semantics. [Research Architecture](architecture/RESEARCH_ARCHITECTURE.md)
 separately defines future behavioral anomaly detection and Models A–D.
 [Threat Model V1](threat-model/THREAT_MODEL_V1.md) records proposed controls.
-All target capabilities remain PLANNED; no experiments have run.
+Authentication and the experimental Model A RBAC baseline are implemented; the remaining target capabilities are PLANNED. No research experiments have run.
 
 ## Target Flow
 
@@ -54,7 +54,7 @@ Planned components:
   - Feeds research datasets and operational dashboards.
   - Supports incident analysis and automated response.
 
-None of these AegisAI-specific engines currently exist in source code.
+The experimental Model A RBAC engine is implemented; see [SPEC-005](specs/SPEC-005-RBAC.md). ABAC, risk, the full policy engine, and audit remain PLANNED.
 
 ## Potential Technology Direction
 
@@ -71,7 +71,7 @@ Target technologies:
 - Docker Compose
 - Kubernetes later
 
-These technologies are PLANNED candidates; .NET 8 is the required .NET target. Only the .NET 8 solution and health endpoint are implemented; infrastructure integrations remain PLANNED.
+These technologies are PLANNED candidates; .NET 8 is the required .NET target. The .NET 8 foundation, authentication, and Model A RBAC with an in-memory policy snapshot are implemented; external infrastructure integrations remain PLANNED.
 
 ## Target Service Boundaries
 
@@ -97,7 +97,7 @@ Target policy decisions:
 - `STEP_UP`: User or service must satisfy stronger authentication or verification.
 - `LIMIT`: Request proceeds under reduced capability, rate, scope, or data exposure.
 
-The repository currently does not implement this decision model.
+Model A currently returns ALLOW/DENY for decision queries only; STEP_UP, LIMIT, and protected action enforcement remain PLANNED.
 
 ## Observability Goals
 
