@@ -319,3 +319,38 @@ pending review, not committed. Docker runtime acceptance remains pending.
 **PLANNED**: container runtime acceptance, production provider/context integration,
 protected-operation enforcement, durable audit and behavioral AI/ML.
 **EXPERIMENTAL**: local synthetic authorization exploration and engine-only smoke.
+
+## 2026-09-23 — AEGISAI-011: GitHub CI and repository security baseline
+
+Status: **IMPLEMENTED** in working tree; pending review, not committed.
+
+- Read AGENTS.md and all existing AegisAI Markdown documentation. Began from clean
+  docs/aegisai-research-architecture at f73d1aa; legacy checkpoint resolves to b9518fa.
+- Added .github/workflows/ci.yml for pull requests targeting main, with checkout,
+  .NET 8 setup, solution restore, Release build and all tests. Failures propagate;
+  no path/test filters or failure suppression are configured.
+- Granted contents: read only, disabled checkout credential persistence, pinned
+  both official actions to verified full hashes, and used a hosted runner with a
+  20-minute timeout. No repository secrets or deployment access are requested.
+- Reviewed ignore rules, solution/project configuration, example settings, Docker
+  files, development scripts, and credential generation. Current tracked-text
+  credential-pattern scan and sensitive-filename check found no matches.
+- Added missing JWK and named secrets JSON exclusions to .dockerignore; existing
+  .gitignore already covers these. Verified twelve representative ignored paths.
+- Recorded remaining limits: historical credential rotation is unverified, tools
+  bind mounts can read local files, images are mutable and dependencies unlocked.
+  History/archives/ignored contents and hosted security settings were not scanned.
+- Added [SPEC-011](specs/SPEC-011-CI-SECURITY.md) with workflow semantics, review
+  scope, security observations, actual validation, and hosted execution limits.
+- Local macOS arm64 SDK 8.0.204 restore and Release build succeeded with zero
+  warnings/errors; all 168 tests passed (14 Domain, 53 Application, 93 integration,
+  4 architecture, 4 experiments), zero failed/skipped. Used single-node MSBuild
+  with node reuse disabled. Stopped a stalled sandbox restore; approved access
+  allowed the equivalent restore/build/test sequence to complete.
+- Workflow YAML/structural assertions, shell syntax, Compose configuration,
+  Markdown links, and diff whitespace checks passed. actionlint was unavailable;
+  GitHub-hosted execution has not run. No application source or test changes.
+- Preserved HEAD and securing-microservices-legacy; no commit or push performed.
+
+**PLANNED**: hosted PR validation, owner-managed merge/security settings, and
+confirmation of historical credential revocation. **EXPERIMENTAL**: no new runs.
