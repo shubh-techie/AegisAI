@@ -116,3 +116,35 @@ Status: **IMPLEMENTED** in working tree; pending review and not committed.
 assurance/revocation/replay decisions, deployment HTTPS, permission evaluation,
 and audit. No RBAC, ABAC, or risk scoring was implemented.
 **EXPERIMENTAL**: none; no research results or benchmarks produced.
+
+## 2026-09-23 — AEGISAI-005: Model A RBAC baseline
+
+Status: **IMPLEMENTED** experimental software in the working tree; pending review
+and not committed. No research experiments or measurements were performed.
+
+- Read AGENTS.md and relevant architecture, specifications, ADRs, project history,
+  and development records. Began from clean foundation branch at `2ff024a`.
+- Added Domain Subject, Role, Permission, Resource, and Action concepts and
+  Application AuthorizationRequest and AuthorizationDecision contracts.
+- Implemented IAuthorizationEngine with deterministic RBAC and ALLOW/DENY outcomes;
+  exact resource/action matches, union of role grants, and default denial.
+- Added a validated immutable versioned policy snapshot behind IRbacPolicyProvider
+  and an in-memory Infrastructure adapter. Server configuration owns assignments;
+  subjects are issuer-qualified, and absent policy grants nothing.
+- Added authenticated POST /authorization/evaluate. Api maps transport/identity
+  inputs; Application evaluates permissions. Requests cannot choose their subject
+  or roles. Token role claims and spoofed headers do not grant permissions.
+- Added SPEC-005 with assumptions, decision algorithm, configuration examples,
+  HTTP semantics, limitations, and test scenarios; updated current summaries.
+- Added Domain/Application unit tests and real JWT integration tests. Initial
+  integration failures identified premature configuration capture; policy creation
+  now follows finalized host configuration and validation precedes request serving.
+- Final validation: dotnet build passed with zero warnings/errors; dotnet test
+  passed all 72 tests (6 Domain, 21 Application, 41 integration, 4 architecture),
+  zero failed/skipped. Local Markdown links and git diff --check passed.
+- Preserved HEAD, historical commits, and securing-microservices-legacy.
+  No commit or push performed.
+
+**EXPERIMENTAL**: Model A software baseline only, without claimed research results.
+**PLANNED**: resource enforcement, durable audit, research measurements, and Models
+B–D. No ABAC, context evaluation, risk scoring, or behavioral AI was implemented.

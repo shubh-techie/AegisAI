@@ -1,9 +1,14 @@
 using AegisAI.Api.Authentication;
+using AegisAI.Api.Authorization;
 using AegisAI.Application.Identity;
+using AegisAI.Application.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAegisAuthentication(builder.Configuration);
+builder.Services.AddRbacBaseline();
 var app = builder.Build();
+// Validate and freeze policy after all host configuration providers have been applied.
+_ = app.Services.GetRequiredService<IRbacPolicyProvider>();
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -12,6 +17,8 @@ app.MapGet("/health", () => Results.Ok(new { status = "healthy" })).AllowAnonymo
 app.MapGet("/identity", (ICurrentIdentity current) =>
     current.Identity is { } identity ? Results.Ok(identity) : Results.Unauthorized())
     .RequireAuthorization();
+
+app.MapRbacBaseline();
 
 app.Run();
 

@@ -1,4 +1,3 @@
-# AegisAI.Domain.Tests
+# Domain tests
 
-PLANNED: tests for future Domain behavior. This test project intentionally has
-no test cases because no business functionality exists yet.
+IMPLEMENTED: RBAC concept validation, exact equality, and immutable role permissions.

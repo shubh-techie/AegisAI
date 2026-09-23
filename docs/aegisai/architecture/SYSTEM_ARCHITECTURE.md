@@ -5,8 +5,9 @@ Status: PLANNED system design; IMPLEMENTED documentation
 
 The .NET 8 foundation now includes the authentication baseline in
 [SPEC-004](../specs/SPEC-004-AUTHENTICATION.md): standard JWT validation and a
-provider-neutral identity boundary. Authorization engines, risk, audit, and
-provider deployment integration remain PLANNED. The following design is the target specified by [SPEC-003](../specs/SPEC-003-AEGISAI-ARCHITECTURE.md).
+provider-neutral identity boundary. [SPEC-005](../specs/SPEC-005-RBAC.md) adds the
+experimental Model A RBAC decision engine. ABAC, risk, audit, protected resource
+enforcement, and provider deployment integration remain PLANNED. The following design is the target specified by [SPEC-003](../specs/SPEC-003-AEGISAI-ARCHITECTURE.md).
 
 ## Request decision flow
 
