@@ -4,7 +4,7 @@
 
 Observe. Assess. Authorize. Respond.
 
-**Under development — solution foundation only.** A .NET 8 solution and minimal
+**Under development — V0.1 experimental authorization platform.** A .NET 8 solution and minimal
 API expose `GET /health` and authenticated `GET /identity`; Models A/B/C have experimental authorization decision endpoints.
 
 AegisAI is intended to explore adaptive authorization, contextual risk assessment,
@@ -14,14 +14,41 @@ behavioral anomaly detection, and policy-controlled response in distributed syst
 
 - **IMPLEMENTED**: .NET 8 Clean Architecture solution, nullable reference types,
   health endpoint, JWT authentication, Models A/B/C authorization, unit tests, integration tests,
-  architecture tests, and foundation documentation.
-- **PLANNED**: business functionality and its tests, authorization,
-  risk assessment, telemetry, and deployment support.
+  architecture tests, structured audit, local Docker workflow, and documentation.
+- **PLANNED**: behavioral AI/ML (Model D), live context, protected-operation
+  enforcement, durable audit, production identity-provider integration and deployment.
 - **EXPERIMENTAL**: Models A/B/C baselines are implemented; an initial synthetic engine-only smoke run has executed.
 
 No research findings, production datasets, or publications are claimed. A synthetic
 engine-only smoke run is available for framework validation; it supports no broad
 performance claims.
+
+## Quick Start — local Docker development
+
+Prerequisites: Git, a POSIX shell, Docker with Compose, and a running Linux
+container daemon. Initial builds download images/packages. Clone this repository
+using its hosting URL, then run from the clone root:
+
+```sh
+git clone <repository-url> AegisAI
+cd AegisAI
+./dev up                  # Build, generate temporary local credentials, start API
+./dev health              # GET /health; also available at http://127.0.0.1:5080/health
+./dev demo                # Exercise A/B/C and show decisions + audit correlation IDs
+./dev logs                # JSON decision audit; Ctrl-C stops following
+./dev test                # Full Release test suite
+./dev experiment my-smoke  # New output directory: research/results/my-smoke/
+./dev down
+```
+
+The demo uses **synthetic** identities and static policy/context fixtures. Local
+credentials expire after one hour; rerun `./dev up` to rotate them. The API validates
+signed JWTs; Development-only trust is not a production identity provider.
+STEP_UP/LIMIT are recommendations, with no challenge/rate enforcement yet.
+
+See [environment specification](docs/aegisai/specs/SPEC-010-V01-ENVIRONMENT.md),
+[reproduction details](research/README.md), and the
+[V0.1 readiness report](docs/aegisai/V01_READINESS.md) for validation and limitations.
 
 ## History
 
@@ -53,9 +80,9 @@ research/
   experiments/               Reproducible experiment definitions
   notebooks/                 Exploratory analysis
   results/                   Actual experiment outputs
-benchmarks/                  Future benchmark harnesses and measurements
+benchmarks/                  Executable synthetic A–C experiment framework
 deployment/
-  docker/                    Future container configuration
+  docker/                    Local API container and development tools
   kubernetes/                Future Kubernetes manifests
 papers/                      Future research manuscripts
 ```
@@ -94,7 +121,8 @@ No root LICENSE file is currently present; no license is asserted here.
 
 IMPLEMENTED: standard JWT bearer authentication and a provider-neutral Application
 identity boundary. `/health` remains public; `/identity` requires a validated token.
-No tokens are trusted until authority and audience are configured. See
+Provider deployments require authority and audience configuration. The explicitly
+opted-in local Docker environment uses temporary Development-only public-key trust. See
 [SPEC-004](docs/aegisai/specs/SPEC-004-AUTHENTICATION.md) for example configuration,
 validation rules, tests, and remaining provider integration work.
 
@@ -115,7 +143,7 @@ resource, and environment attributes come from server configuration, never reque
 attribute bags. Missing attributes or applicable rules deny. See
 [SPEC-006](docs/aegisai/specs/SPEC-006-ABAC.md) and
 [ADR-003](docs/aegisai/adr/ADR-003-POLICY-EVALUATION.md). These are experimental
-software baselines; no AI, anomaly detection, or research results exist. Model C adds deterministic contextual risk.
+software baselines; behavioral AI and anomaly detection remain PLANNED. Model C adds deterministic contextual risk.
 
 ## Model C — deterministic contextual risk
 

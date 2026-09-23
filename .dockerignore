@@ -1,0 +1,16 @@
+.git
+**/bin
+**/obj
+**/.local
+**/.env*
+**/*.pem
+**/*.key
+**/*.pfx
+**/*.p12
+**/secrets.json
+**/appsettings.Local.json
+**/appsettings.*.Local.json
+.idea
+.codex
+.agents
+research/results

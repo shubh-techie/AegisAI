@@ -7,7 +7,11 @@ positives, false negatives, or behavioral detection quality yet.
 
 ## Reproduce the smoke experiment
 
-Prerequisites: Git and a .NET 8 SDK compatible with global.json. Run from the
+Docker alternative from a normal clone: `./dev experiment my-smoke-run` runs the
+same Release manifest and persists results here. See [SPEC-010](../docs/aegisai/specs/SPEC-010-V01-ENVIRONMENT.md).
+Container timing is not equivalent to host timing; record the environment.
+
+Host prerequisites: Git and a .NET 8 SDK compatible with global.json. Run from the
 repository root, with package restore access on the first build:
 
 ```sh
@@ -44,7 +48,7 @@ Each run produces:
 - environment.json: SDK/runtime/OS/architecture/processor count/memory availability,
   timer frequency, Release/Debug mode, selected runtime settings, source commit,
   dirty-source status, manifest/source/binary hashes, and explicit future-metric gaps.
-- source.zip: exact source/project/solution/global.json snapshot, including
+- source.zip: exact source/project/solution/global.json snapshot (including deployment C# tooling), including
   uncommitted implementation. No .git history, build outputs, credentials, or raw
   environment dump is collected.
 

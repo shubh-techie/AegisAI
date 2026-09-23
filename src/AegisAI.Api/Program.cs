@@ -10,10 +10,17 @@ builder.Logging.AddJsonConsole(options => options.IncludeScopes = false);
 builder.Services.AddSingleton<IAuthorizationAuditSink, LoggingAuthorizationAuditSink>();
 builder.Services.AddScoped<AuthorizationObservation>();
 builder.Services.AddAegisAuthentication(builder.Configuration);
+builder.Services.AddOptions<Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions>(
+    Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)
+    .PostConfigure<IConfiguration, IWebHostEnvironment>((options, configuration, environment) =>
+        LocalDevelopmentTrust.Configure(options, configuration, environment.EnvironmentName));
 builder.Services.AddRbacBaseline();
 builder.Services.AddAbacBaseline();
 builder.Services.AddContextualRisk();
 var app = builder.Build();
+// Resolve finalized development trust at startup, including test-host configuration.
+_ = app.Services.GetRequiredService<Microsoft.Extensions.Options.IOptionsMonitor<Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerOptions>>()
+    .Get(Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme);
 // Validate and freeze policy after all host configuration providers have been applied.
 _ = app.Services.GetRequiredService<IRbacPolicyProvider>();
 _ = app.Services.GetRequiredService<IAbacContextProvider>();

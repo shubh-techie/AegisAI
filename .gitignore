@@ -373,3 +373,6 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+
+# Generated local Docker development credentials and configuration
+deployment/docker/.local/
