@@ -5,7 +5,7 @@
 Observe. Assess. Authorize. Respond.
 
 **Under development — solution foundation only.** A .NET 8 solution and minimal
-API expose `GET /health`; business functionality is not implemented.
+API expose `GET /health` and authenticated `GET /identity`; business functionality is not implemented.
 
 AegisAI is intended to explore adaptive authorization, contextual risk assessment,
 behavioral anomaly detection, and policy-controlled response in distributed systems.
@@ -13,8 +13,9 @@ behavioral anomaly detection, and policy-controlled response in distributed syst
 ## Status
 
 - **IMPLEMENTED**: .NET 8 Clean Architecture solution, nullable reference types,
-  health endpoint, integration tests, architecture tests, and foundation documentation.
-- **PLANNED**: business functionality, domain/application tests, authorization,
+  health endpoint, JWT authentication, identity unit tests, integration tests,
+  architecture tests, and foundation documentation.
+- **PLANNED**: business functionality and its tests, authorization,
   risk assessment, telemetry, and deployment support.
 - **EXPERIMENTAL**: no experiments have been implemented or executed yet.
 
@@ -77,8 +78,8 @@ dotnet run --project src/AegisAI.Api -- --urls http://localhost:5080
 ```
 
 `GET http://localhost:5080/health` returns `{"status":"healthy"}`. This checks
-process liveness only. Domain and Application test projects intentionally contain
-no cases yet; integration and architecture tests cover the implemented foundation.
+process liveness only. The Domain test project intentionally contains no cases yet; Application tests
+cover identity invariants; integration and architecture tests cover the implemented foundation.
 
 See [SPEC-002](docs/aegisai/specs/SPEC-002-SOLUTION-FOUNDATION.md) and
 [ADR-001](docs/aegisai/adr/ADR-001-CLEAN-ARCHITECTURE.md).
@@ -86,3 +87,11 @@ See [SPEC-002](docs/aegisai/specs/SPEC-002-SOLUTION-FOUNDATION.md) and
 ## License
 
 No root LICENSE file is currently present; no license is asserted here.
+
+## Authentication baseline
+
+IMPLEMENTED: standard JWT bearer authentication and a provider-neutral Application
+identity boundary. `/health` remains public; `/identity` requires a validated token.
+No tokens are trusted until authority and audience are configured. See
+[SPEC-004](docs/aegisai/specs/SPEC-004-AUTHENTICATION.md) for example configuration,
+validation rules, tests, and remaining provider integration work.

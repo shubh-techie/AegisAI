@@ -88,3 +88,31 @@ not committed. All described system extensions remain **PLANNED**.
 
 **EXPERIMENTAL**: plans only. No experiments, research findings, benchmark values,
 datasets, or citations were fabricated or produced.
+
+## 2026-09-23 — AEGISAI-004: Authentication baseline
+
+Status: **IMPLEMENTED** in working tree; pending review and not committed.
+
+- Read AGENTS.md, System Architecture, SPEC-003, applicable ADRs, development log,
+  and project history. Began from clean foundation branch at `060c5f5`.
+- Added Application-owned ICurrentIdentity and issuer-qualified AuthenticatedIdentity
+  without framework/provider dependencies; Domain and Infrastructure are unchanged.
+- Added scoped HTTP identity mapping in Api, standard ASP.NET Core JWT bearer
+  authentication, and an authenticated-user fallback policy. Health remains
+  anonymous; GET /identity demonstrates the identity boundary.
+- Enforced signature, issuer, audience, expiry/lifetime, and unique subject/issuer
+  checks. Added HTTPS authority/audience configuration examples without secrets.
+  An unconfigured host accepts no tokens; invalid partial configuration fails startup.
+- Added SPEC-004 and ADR-002 and updated README and system implementation status.
+- Added Application identity tests and real-handler JWT integration tests using
+  temporary RSA signing keys. No test bypass or test key exists in production code.
+- Validation: dotnet restore succeeded; dotnet build succeeded with zero warnings
+  and zero errors; dotnet test passed 31 tests (7 Application, 20 integration,
+  4 architecture), with zero failures/skips. Domain still has no behavior/tests.
+- Documentation links and git diff --check passed. Git history and the legacy
+  checkpoint are preserved; no commit or push performed.
+
+**PLANNED**: live provider discovery/rotation tests, access-token profile and
+assurance/revocation/replay decisions, deployment HTTPS, permission evaluation,
+and audit. No RBAC, ABAC, or risk scoring was implemented.
+**EXPERIMENTAL**: none; no research results or benchmarks produced.

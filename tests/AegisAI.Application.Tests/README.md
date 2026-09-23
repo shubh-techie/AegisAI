@@ -1,4 +1,3 @@
-# AegisAI.Application.Tests
+# Application tests
 
-PLANNED: tests for future Application behavior. This test project intentionally has
-no test cases because no business functionality exists yet.
+IMPLEMENTED: authenticated identity invariants. Other application behavior remains PLANNED.

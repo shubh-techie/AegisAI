@@ -3,8 +3,10 @@
 Date: 2026-09-23  
 Status: PLANNED system design; IMPLEMENTED documentation
 
-Only the .NET 8 project structure, health endpoint, and foundation tests currently
-exist. The following design is the target specified by [SPEC-003](../specs/SPEC-003-AEGISAI-ARCHITECTURE.md).
+The .NET 8 foundation now includes the authentication baseline in
+[SPEC-004](../specs/SPEC-004-AUTHENTICATION.md): standard JWT validation and a
+provider-neutral identity boundary. Authorization engines, risk, audit, and
+provider deployment integration remain PLANNED. The following design is the target specified by [SPEC-003](../specs/SPEC-003-AEGISAI-ARCHITECTURE.md).
 
 ## Request decision flow
 
