@@ -1,0 +1,18 @@
+{
+  "dataKind": "SYNTHETIC",
+  "version": "synthetic-authorization-smoke-v1",
+  "seed": 20260923,
+  "warmupCycles": 25,
+  "measurementCycles": 100,
+  "repetitions": 3,
+  "scenarios": [
+    {"id":"low-risk", "assignedRole":true, "department":"engineering", "action":"read", "riskIndicator":0},
+    {"id":"step-up-boundary", "assignedRole":true, "department":"engineering", "action":"read", "riskIndicator":0.25},
+    {"id":"limit-boundary", "assignedRole":true, "department":"engineering", "action":"read", "riskIndicator":0.5},
+    {"id":"deny-boundary", "assignedRole":true, "department":"engineering", "action":"read", "riskIndicator":0.75},
+    {"id":"missing-risk", "assignedRole":true, "department":"engineering", "action":"read", "riskIndicator":null},
+    {"id":"unassigned-role", "assignedRole":false, "department":"engineering", "action":"read", "riskIndicator":0},
+    {"id":"attribute-mismatch", "assignedRole":true, "department":"finance", "action":"read", "riskIndicator":0},
+    {"id":"forbidden-action", "assignedRole":true, "department":"engineering", "action":"write", "riskIndicator":0}
+  ]
+}

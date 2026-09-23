@@ -179,3 +179,101 @@ not committed. No research experiments or measurements were performed.
 are not research outcomes. **PLANNED**: dynamic evidence with provenance/freshness,
 resource enforcement, audit, measurement tooling, and Models C/D. No AI, behavioral
 anomaly detection, or contextual risk scoring was implemented.
+
+## 2026-09-23 — AEGISAI-007: Deterministic contextual risk
+
+Status: **IMPLEMENTED** experimental Model C software in working tree; pending
+review and not committed. No research runs or performance measurements performed.
+
+- Read AGENTS.md, relevant authorization specifications and ADRs, system architecture,
+  and existing implementation records. Began from clean branch at `f5965d7`.
+- Added immutable normalized RiskContext and five explicitly simulated indicators;
+  the fixed decimal weighted sum provides score, level, versions, and per-signal
+  contributions/reasons. This is a deterministic heuristic, not AI or ML.
+- Added Application risk/provider abstractions and Model C composition. RBAC/ABAC
+  denial skips risk evaluation; missing indicators remain Unknown and force denial.
+- Added ALLOW, DENY, STEP_UP, and LIMIT recommendations with explicit stronger-
+  authentication/reevaluation or rate-cap obligations. No enforcement is claimed.
+- Added trusted request-bound Infrastructure snapshots and authenticated
+  POST /authorization/evaluate/model-c. Models A/B retain their behavior.
+- Added SPEC-007, ADR-004, synthetic configuration examples, and current summaries.
+- Tests cover levels, exact/below-threshold boundaries, normalized explanations,
+  each missing signal, full missing context, invalid inputs, immutability, provider
+  failure, baseline short-circuiting, four HTTP outcomes, and context binding.
+- Integration tests caught null numeric configuration binding as zero. Replaced
+  generic signal binding with explicit scalar parsing preserving unknown values;
+  the regression test now passes.
+- Final dotnet build passed with zero warnings/errors. All 140 tests passed:
+  14 Domain, 53 Application, 69 integration, 4 architecture; zero failed/skipped.
+- Local documentation links and git diff --check passed. HEAD and the historical
+  legacy checkpoint are unchanged; no commit or push performed.
+
+**EXPERIMENTAL**: hand-specified contextual risk software and synthetic fixtures;
+no trained model, behavioral detection, measured assurance, or research findings.
+**PLANNED**: verified live context, freshness/provenance, recent authorization
+history if justified, challenge/rate enforcement, audit, and research measurements.
+
+## 2026-09-23 — AEGISAI-008: Authorization audit and observability
+
+Status: **IMPLEMENTED** best-effort observability in working tree; pending review
+and not committed.
+
+- Read AGENTS.md, system audit architecture, relevant authorization contracts,
+  SPEC-007, and existing implementation records. Began from clean branch `57487e6`.
+- Added Application audit event/sink contracts and API observation around the
+  selected engine, producing one event per completed A/B/C HTTP evaluation.
+- Recorded generated correlation/event IDs, trace IDs when available, SHA-256
+  pseudonyms for subject/resource/action, model, decision, optional risk, reason
+  codes, UTC timestamp, and monotonic engine duration. No tokens, credentials,
+  attribute bags, raw identifiers, or exception messages enter these events.
+- Added structured JSON console logging and .NET ActivitySource/Meter instrumentation
+  compatible with OpenTelemetry collection. No exporter, Kafka, or external service
+  was introduced. Metric dimensions are limited to model and decision.
+- Isolated sink/observer failures from authorization results; engine errors propagate
+  unchanged without fabricated decision events. Added a response correlation header.
+- Created SPEC-008 describing contracts, data minimization, measurement boundaries,
+  collection setup, exclusions, and the distinction from future durable audit.
+- Final validation: dotnet build passed with zero warnings/errors; all 152 tests
+  passed (14 Domain, 53 Application, 81 integration, 4 architecture), zero failed
+  or skipped. Tests cover event correctness, real telemetry listeners, structured
+  logger state, secret canaries, correlation, and failure isolation.
+- Local documentation links and git diff --check passed. HEAD and the legacy
+  checkpoint remain unchanged. No commit or push performed.
+
+**PLANNED**: durable pre-action audit acceptance, authentication rejection audit,
+protected operation outcomes, retention/access controls, and deployment exporters.
+**EXPERIMENTAL**: authorization software only; no performance or research findings.
+
+## 2026-09-23 — AEGISAI-009: Reproducible authorization experiment framework
+
+Status: **IMPLEMENTED** experimental runner and generated synthetic smoke artifacts;
+working tree pending review, not committed.
+
+- Read AGENTS.md, Research Architecture, relevant A–C contracts and observability
+  specification. Began from clean branch at `bdb9656`.
+- Added net8.0 experiment console and test projects to the solution. The runner
+  invokes real A/B/C engines using eight clearly labeled synthetic scenarios.
+- Added seeded paired workloads, randomized model order, explicit warm-up and
+  measured phases, raw tick observations, decision counts, latency percentiles,
+  throughput, error accounting, environment metadata, and source/binary hashes.
+- Added exact source archives for reproducing runs against uncommitted code.
+  Model D remains PLANNED; future detection-quality interfaces have no implementation.
+- Created SPEC-009 and research/README with executable reproduction commands and
+  explicit exclusions: no HTTP, authentication, audit delivery, or enforcement timing.
+- Release build passed with zero warnings/errors. All 156 tests passed (14 Domain,
+  53 Application, 81 integration, 4 architecture, 4 experiment tests).
+- Executed the Release smoke manifest separately after tests. Generated artifacts
+  are in research/results/aegisai009-smoke: 2,400 measured calls per model, 600
+  warm-up calls per model, 9,000 observations total, zero errors.
+- Independently recomputed summary counts/latency values from raw observations and
+  checked archived source hashes against the current source. No results were edited
+  or invented. Actual measurements are in generated summary.json, not assumed here.
+- Local Markdown links passed. The solution uses existing CRLF line endings;
+  git -c core.whitespace=cr-at-eol diff --check passed without changing that source
+  snapshot. Historical commits, HEAD, and securing-microservices-legacy are unchanged. No commit or push performed.
+
+**EXPERIMENTAL**: tiny single-threaded synthetic engine-only smoke measurement;
+aggregate measured windows were under 5 ms per model. No causal comparison,
+production performance, representativeness, or security effectiveness is claimed.
+**PLANNED**: Model D, independent detection labels, false-positive/negative analysis,
+behavioral anomaly evaluation, and end-to-end measurements with durable audit.

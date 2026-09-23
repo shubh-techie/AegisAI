@@ -8,7 +8,7 @@ This document describes the intended AegisAI architecture. It is a target direct
 request flow and enforcement semantics. [Research Architecture](architecture/RESEARCH_ARCHITECTURE.md)
 separately defines future behavioral anomaly detection and Models A–D.
 [Threat Model V1](threat-model/THREAT_MODEL_V1.md) records proposed controls.
-Authentication and experimental Models A/B are implemented; the remaining target capabilities are PLANNED. No research experiments have run.
+Authentication and experimental Models A/B/C are implemented; the remaining target capabilities are PLANNED. No research experiments have run.
 
 ## Target Flow
 
@@ -54,7 +54,7 @@ Planned components:
   - Feeds research datasets and operational dashboards.
   - Supports incident analysis and automated response.
 
-The experimental Model A RBAC engine is implemented; see [SPEC-005](specs/SPEC-005-RBAC.md). Model B adds ABAC in [SPEC-006](specs/SPEC-006-ABAC.md); risk, the full policy engine, and audit remain PLANNED.
+The experimental Model A RBAC engine is implemented; see [SPEC-005](specs/SPEC-005-RBAC.md). Model B adds ABAC in [SPEC-006](specs/SPEC-006-ABAC.md); Model C adds deterministic risk in [SPEC-007](specs/SPEC-007-CONTEXTUAL-RISK.md); audit and full enforcement remain PLANNED.
 
 ## Potential Technology Direction
 
@@ -97,7 +97,7 @@ Target policy decisions:
 - `STEP_UP`: User or service must satisfy stronger authentication or verification.
 - `LIMIT`: Request proceeds under reduced capability, rate, scope, or data exposure.
 
-Models A/B currently return ALLOW/DENY for decision queries only; STEP_UP, LIMIT, and protected action enforcement remain PLANNED.
+Models A/B return ALLOW/DENY. Model C adds STEP_UP/LIMIT recommendations with explicit obligations. All endpoints are decision queries only; protected action enforcement remains PLANNED.
 
 ## Observability Goals
 

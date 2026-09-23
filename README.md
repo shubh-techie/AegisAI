@@ -5,7 +5,7 @@
 Observe. Assess. Authorize. Respond.
 
 **Under development — solution foundation only.** A .NET 8 solution and minimal
-API expose `GET /health` and authenticated `GET /identity`; Models A (RBAC) and B (RBAC + ABAC) have experimental decision endpoints.
+API expose `GET /health` and authenticated `GET /identity`; Models A/B/C have experimental authorization decision endpoints.
 
 AegisAI is intended to explore adaptive authorization, contextual risk assessment,
 behavioral anomaly detection, and policy-controlled response in distributed systems.
@@ -13,13 +13,15 @@ behavioral anomaly detection, and policy-controlled response in distributed syst
 ## Status
 
 - **IMPLEMENTED**: .NET 8 Clean Architecture solution, nullable reference types,
-  health endpoint, JWT authentication, Models A/B authorization, unit tests, integration tests,
+  health endpoint, JWT authentication, Models A/B/C authorization, unit tests, integration tests,
   architecture tests, and foundation documentation.
 - **PLANNED**: business functionality and its tests, authorization,
   risk assessment, telemetry, and deployment support.
-- **EXPERIMENTAL**: Models A/B baselines are implemented; no research experiments or benchmarks have run.
+- **EXPERIMENTAL**: Models A/B/C baselines are implemented; an initial synthetic engine-only smoke run has executed.
 
-No research findings, benchmark results, datasets, or publications are claimed.
+No research findings, production datasets, or publications are claimed. A synthetic
+engine-only smoke run is available for framework validation; it supports no broad
+performance claims.
 
 ## History
 
@@ -103,7 +105,7 @@ for the authenticated caller and returns ALLOW or DENY with a reason and policy
 version. Roles and permissions come from server configuration; the default policy
 has no grants. This experimental endpoint evaluates decisions without executing
 protected actions. See [SPEC-005](docs/aegisai/specs/SPEC-005-RBAC.md) for configuration,
-assumptions, algorithm, test scenarios, and limitations. Model B adds ABAC; risk remains PLANNED.
+assumptions, algorithm, test scenarios, and limitations. Model B adds ABAC; Model C adds deterministic contextual risk.
 
 ## Model B — RBAC + ABAC
 
@@ -113,4 +115,31 @@ resource, and environment attributes come from server configuration, never reque
 attribute bags. Missing attributes or applicable rules deny. See
 [SPEC-006](docs/aegisai/specs/SPEC-006-ABAC.md) and
 [ADR-003](docs/aegisai/adr/ADR-003-POLICY-EVALUATION.md). These are experimental
-software baselines; no AI, anomaly detection, risk scoring, or research results exist.
+software baselines; no AI, anomaly detection, or research results exist. Model C adds deterministic contextual risk.
+
+## Model C — deterministic contextual risk
+
+`POST /authorization/evaluate/model-c` adds a fixed weighted score after RBAC and
+ABAC allow. It returns ALLOW, DENY, STEP_UP, or LIMIT with risk level and signal
+contributions. Context is server-owned simulation data; missing context denies.
+This is a deterministic heuristic, not AI or ML. STEP_UP/LIMIT are recommendations
+with obligations, not implemented enforcement. See
+[SPEC-007](docs/aegisai/specs/SPEC-007-CONTEXTUAL-RISK.md) and
+[ADR-004](docs/aegisai/adr/ADR-004-RISK-ENGINE.md).
+
+## Authorization audit and observability
+
+IMPLEMENTED: one structured decision event per completed Model A/B/C API evaluation,
+with generated correlation ID, pseudonymized identifiers, outcome/reasons, optional
+risk, UTC timestamp, and processing duration. .NET ActivitySource/Meter instrumentation
+is OpenTelemetry-compatible; no exporter or Kafka is configured. Audit failures do
+not change experimental decisions. See [SPEC-008](docs/aegisai/specs/SPEC-008-AUDIT-OBSERVABILITY.md)
+for data minimization and best-effort delivery limits. Durable audit remains PLANNED.
+
+## Reproducible synthetic experiments
+
+An executable A–C engine-only comparison runner, synthetic scenarios, and generated
+smoke artifacts are available. See [research/README](research/README.md) for exact
+Release build/test/run commands and [SPEC-009](docs/aegisai/specs/SPEC-009-EXPERIMENT-FRAMEWORK.md)
+for measurement boundaries. Model D and detection-quality analysis remain PLANNED.
+Smoke measurements do not establish production performance or security effectiveness.
