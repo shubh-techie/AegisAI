@@ -1,0 +1,81 @@
+{
+  "CompletedUtc": "2026-09-23T22:46:00.7865573+00:00",
+  "DataKind": "SYNTHETIC",
+  "Version": "synthetic-authorization-smoke-v1",
+  "ModelOrders": [
+    [
+      "B",
+      "A",
+      "C"
+    ],
+    [
+      "C",
+      "A",
+      "B"
+    ],
+    [
+      "B",
+      "C",
+      "A"
+    ]
+  ],
+  "Models": [
+    {
+      "Model": "A",
+      "Attempts": 2400,
+      "Completed": 2400,
+      "Errors": 0,
+      "WindowSeconds": 0.0010382,
+      "DecisionsPerSecond": 2311693.3153534965,
+      "MeanMicroseconds": 0.316136666666657,
+      "P50Microseconds": 0.292,
+      "P95Microseconds": 0.375,
+      "P99Microseconds": 1.167,
+      "Decisions": {
+        "DENY": 600,
+        "ALLOW": 1800,
+        "STEP_UP": 0,
+        "LIMIT": 0
+      }
+    },
+    {
+      "Model": "B",
+      "Attempts": 2400,
+      "Completed": 2400,
+      "Errors": 0,
+      "WindowSeconds": 0.0031679,
+      "DecisionsPerSecond": 757599.671706809,
+      "MeanMicroseconds": 1.2248470833333291,
+      "P50Microseconds": 1.25,
+      "P95Microseconds": 1.666,
+      "P99Microseconds": 8.167,
+      "Decisions": {
+        "DENY": 900,
+        "ALLOW": 1500,
+        "STEP_UP": 0,
+        "LIMIT": 0
+      }
+    },
+    {
+      "Model": "C",
+      "Attempts": 2400,
+      "Completed": 2400,
+      "Errors": 0,
+      "WindowSeconds": 0.0066587999999999994,
+      "DecisionsPerSecond": 360425.3018561903,
+      "MeanMicroseconds": 2.636101666666665,
+      "P50Microseconds": 2.375,
+      "P95Microseconds": 7.708,
+      "P99Microseconds": 14.958,
+      "Decisions": {
+        "DENY": 1500,
+        "ALLOW": 300,
+        "STEP_UP": 300,
+        "LIMIT": 300
+      }
+    }
+  ],
+  "ProcessCpuSeconds": 0.04,
+  "AllocatedBytes": 8996160,
+  "Limitations": "Smoke/microbenchmark only. No production performance or detection claims. No durable audit boundary."
+}

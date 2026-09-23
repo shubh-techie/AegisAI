@@ -6,10 +6,10 @@ Status: **IMPLEMENTED** in working tree; pending review, not committed.
 
 ## Workflow contract
 
-[CI](../../../.github/workflows/ci.yml) runs on pull requests targeting main,
+[CI](../../../.github/workflows/ci.yml) runs on pushes to main and pull requests targeting main,
 including drafts, without path filters. The default pull_request activities cover
-opening, reopening, and updating a PR. Checkout uses the event's default merge
-revision. One GitHub-hosted ubuntu-24.04 job, named Build and test, runs:
+opening, reopening, and updating a PR. Checkout uses the PR merge revision or the
+pushed commit for push events. One GitHub-hosted ubuntu-24.04 job, named Build and test, runs:
 
 1. Checkout repository.
 2. Install the latest stable .NET 8 SDK using 8.0.x, compatible with the existing
@@ -33,14 +33,11 @@ are requested. Tests generate synthetic credentials locally. There are no upload
 deployment steps, environment dumps, shared caches, or privileged PR triggers.
 Use pull_request, not pull_request_target, to execute contributed build/test code.
 
-Actions are pinned to full upstream commit hashes, verified with git ls-remote:
-
-| Action | Upstream tag checked | Commit |
-| --- | --- | --- |
-| actions/checkout | v6 | d23441a48e516b6c34aea4fa41551a30e30af803 |
-| actions/setup-dotnet | v5 | 26b0ec14cb23fa6904739307f278c14f94c95bf1 |
-
-Pins require reviewed updates. The SDK and hosted runner receive updates, so this
+Per the final task's preference, trusted official actions use major-version pins:
+actions/checkout@v6 and actions/setup-dotnet@v5. No third-party actions are used.
+These replace the initial full-commit pins; major tags can move as upstream publishes
+updates, so they do not provide immutable action provenance. Major upgrades require
+review. The SDK and hosted runner also receive updates, so this
 does not promise byte-identical builds. See the official
 [workflow syntax](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax),
 [checkout](https://github.com/actions/checkout), and
@@ -74,9 +71,10 @@ with embedded credentials; reported locations only, never potential values.
   Docker build-context exclusions do not govern bind mounts. Keep real secrets
   outside the repository; this remains a trusted local development tool.
 - Docker image tags are mutable and NuGet dependencies are not locked. No package
-  vulnerability audit, container runtime test, or comprehensive secret-scanner
-  certification is claimed by this review. ZIP archives, ignored local contents,
-  and the full Git history were not included in the text scan.
+  vulnerability audit or comprehensive secret-scanner certification is claimed.
+  The final text scan covered 258 tracked text files and ZIP archive members,
+  with zero candidate matches. Ignored local contents, untracked experiment
+  artifacts, and the full Git history were not included in that scan.
 - [Legacy inspection](../CURRENT_STATE.md) already documents credentials in the
   preserved 2022 history. Removal from the current tree does not revoke them;
   owner confirmation of rotation/revocation remains outstanding. No historical
@@ -84,25 +82,57 @@ with embedded credentials; reported locations only, never potential values.
 
 ## Validation evidence
 
-Local macOS arm64, SDK 8.0.204, 2026-09-23:
+Final validation: local macOS arm64, SDK 8.0.204, 2026-09-23:
 
 ```sh
-dotnet restore AegisAI.sln --disable-parallel -m:1 -nr:false
-dotnet build AegisAI.sln --configuration Release --no-restore -m:1 -nr:false
-dotnet test AegisAI.sln --configuration Release --no-build --no-restore -m:1 -nr:false
+dotnet restore
+dotnet build --configuration Release
+dotnet test --configuration Release
 ```
 
 Restore succeeded; Release build succeeded with zero warnings/errors. All 168
 tests passed: 14 Domain, 53 Application, 93 integration/security, 4 architecture,
-4 experiments; zero failed/skipped. Local flags serialize MSBuild and disable
-node reuse without changing configuration or test selection. The initial sandbox
-restore stalled and was stopped; permitted tooling/network access succeeded.
+4 experiments; zero failed/skipped. These exact commands ran with permitted tooling
+and network access. Earlier serialized validation remains recorded in the log.
+Passing invalid-request integration tests emitted DeveloperExceptionPage error
+events for BadHttpRequestException; these are exercised rejection paths, not failed
+tests. Local Data Protection informational logs also describe unencrypted local
+profile key storage; no production key-storage guarantee is inferred.
 
 YAML parsing and structural assertions passed for the trigger, permissions, action
 pins, credential persistence, full-solution commands, and absence of failure
 suppression. Shell syntax, Compose configuration, local Markdown links, and diff
-whitespace checks passed. actionlint was unavailable. GitHub-hosted Linux execution
-has not occurred; no remote CI success is claimed.
+whitespace checks passed. Ignore checks confirmed .env, .env.*, .idea/, .DS_Store,
+bin/, and obj/ are excluded at root and nested paths, while .env.example is allowed.
+actionlint was unavailable. The final workflow has not been run on GitHub by this
+task; no remote CI success is claimed.
+
+## Docker evidence and V0.1 limitations
+
+The user reported successful manual Docker startup, ASP.NET Core listening on
+port 8080, and GET /health returning HTTP 200. During final verification,
+./dev health also exited successfully and returned {"status":"healthy"}.
+The tools container emitted: "An issue was encountered verifying workloads."
+This warning did not prevent the health check; no workload update was performed.
+The optional demo and ci-validation experiment were not rerun in this final task.
+
+The user also reported ASP.NET Core Data Protection warnings about ephemeral/
+in-memory key storage. The current development environment has no configured
+durable Data Protection key store; protected payloads relying on those keys may
+become unreadable across restarts. Production key persistence, access protection,
+and sharing require separate design and validation. These keys are distinct from
+the development JWT signing key, which is intentionally discarded after issuance.
+Successful /health demonstrates liveness only. Docker V0.1 is an experimental
+development environment, not a production-ready deployment.
+
+## Research integrity
+
+Models A/B/C and tested supporting functionality are **IMPLEMENTED**. Behavioral/
+AI Model D remains **PLANNED**. The runner and synthetic smoke artifacts are
+**EXPERIMENTAL** and do not establish superiority, independent adoption, or
+production readiness. Final documentation review found no affirmative unsupported
+claims of those capabilities; stale statements denying the existing smoke
+artifacts were corrected in current research/architecture summaries.
 
 **PLANNED**: first hosted PR run and owner-managed required-check/branch protection,
 Actions policy, secret scanning/push protection, and historical credential rotation
