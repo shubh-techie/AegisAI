@@ -148,3 +148,34 @@ and not committed. No research experiments or measurements were performed.
 **EXPERIMENTAL**: Model A software baseline only, without claimed research results.
 **PLANNED**: resource enforcement, durable audit, research measurements, and Models
 B–D. No ABAC, context evaluation, risk scoring, or behavioral AI was implemented.
+
+## 2026-09-23 — AEGISAI-006: Model B attribute-based authorization
+
+Status: **IMPLEMENTED** experimental software in working tree; pending review,
+not committed. No research experiments or measurements were performed.
+
+- Read AGENTS.md, RBAC/authentication specifications, applicable ADRs, and current
+  implementation records. Began from clean foundation branch at `04b926f`.
+- Added immutable attribute sets, scoped equality conditions, and resource/action
+  targeted rules. Subject, resource, environment, and requested-action scopes are
+  independently evaluated; all applicable conditions must pass.
+- Added IAbacEvaluator and IAbacContextProvider plus Model B composition: RBAC
+  must allow before ABAC executes; missing evidence or applicable rules deny.
+- Added a trusted immutable Infrastructure snapshot with server-owned subject,
+  resource, and environment fixtures. The action comes from the request. Snapshot
+  validation happens before serving requests; no caller attributes are trusted.
+- Added authenticated POST /authorization/evaluate/model-b with per-stage evidence
+  and separate RBAC/ABAC versions; Model A's endpoint and algorithm are unchanged.
+- Added SPEC-006, ADR-003, example configuration, and current-status documentation.
+- Added independent unit tests and JWT integration comparisons for matching,
+  mismatching, missing, and issuer-bound attributes; RBAC denial short-circuits ABAC.
+- Fixed a type-inference compile error in new unit tests before final validation.
+  Final dotnet build passed with zero warnings/errors. All 107 tests passed:
+  12 Domain, 35 Application, 56 integration, and 4 architecture; zero failed/skipped.
+- Local documentation links and git diff --check passed. HEAD and the historical
+  legacy checkpoint remain unchanged; no commit or push performed.
+
+**EXPERIMENTAL**: Models A/B software baselines only; representative test assertions
+are not research outcomes. **PLANNED**: dynamic evidence with provenance/freshness,
+resource enforcement, audit, measurement tooling, and Models C/D. No AI, behavioral
+anomaly detection, or contextual risk scoring was implemented.

@@ -6,9 +6,11 @@ using AegisAI.Application.Authorization;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAegisAuthentication(builder.Configuration);
 builder.Services.AddRbacBaseline();
+builder.Services.AddAbacBaseline();
 var app = builder.Build();
 // Validate and freeze policy after all host configuration providers have been applied.
 _ = app.Services.GetRequiredService<IRbacPolicyProvider>();
+_ = app.Services.GetRequiredService<IAbacContextProvider>();
 
 app.UseAuthentication();
 app.UseAuthorization();

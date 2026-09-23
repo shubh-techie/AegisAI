@@ -18,7 +18,7 @@ using Xunit;
 
 namespace AegisAI.IntegrationTests;
 
-public sealed class AuthorizationEndpointTests : IDisposable
+public sealed partial class AuthorizationEndpointTests : IDisposable
 {
     private const string Issuer = "https://rbac.example.invalid";
     private readonly RSA _key = RSA.Create(2048);
