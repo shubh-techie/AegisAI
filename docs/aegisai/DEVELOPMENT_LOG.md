@@ -212,3 +212,34 @@ review and not committed. No research runs or performance measurements performed
 no trained model, behavioral detection, measured assurance, or research findings.
 **PLANNED**: verified live context, freshness/provenance, recent authorization
 history if justified, challenge/rate enforcement, audit, and research measurements.
+
+## 2026-09-23 — AEGISAI-008: Authorization audit and observability
+
+Status: **IMPLEMENTED** best-effort observability in working tree; pending review
+and not committed.
+
+- Read AGENTS.md, system audit architecture, relevant authorization contracts,
+  SPEC-007, and existing implementation records. Began from clean branch `57487e6`.
+- Added Application audit event/sink contracts and API observation around the
+  selected engine, producing one event per completed A/B/C HTTP evaluation.
+- Recorded generated correlation/event IDs, trace IDs when available, SHA-256
+  pseudonyms for subject/resource/action, model, decision, optional risk, reason
+  codes, UTC timestamp, and monotonic engine duration. No tokens, credentials,
+  attribute bags, raw identifiers, or exception messages enter these events.
+- Added structured JSON console logging and .NET ActivitySource/Meter instrumentation
+  compatible with OpenTelemetry collection. No exporter, Kafka, or external service
+  was introduced. Metric dimensions are limited to model and decision.
+- Isolated sink/observer failures from authorization results; engine errors propagate
+  unchanged without fabricated decision events. Added a response correlation header.
+- Created SPEC-008 describing contracts, data minimization, measurement boundaries,
+  collection setup, exclusions, and the distinction from future durable audit.
+- Final validation: dotnet build passed with zero warnings/errors; all 152 tests
+  passed (14 Domain, 53 Application, 81 integration, 4 architecture), zero failed
+  or skipped. Tests cover event correctness, real telemetry listeners, structured
+  logger state, secret canaries, correlation, and failure isolation.
+- Local documentation links and git diff --check passed. HEAD and the legacy
+  checkpoint remain unchanged. No commit or push performed.
+
+**PLANNED**: durable pre-action audit acceptance, authentication rejection audit,
+protected operation outcomes, retention/access controls, and deployment exporters.
+**EXPERIMENTAL**: authorization software only; no performance or research findings.

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using AegisAI.Api.Observability;
 using AegisAI.Application.Authorization;
 using AegisAI.Application.Identity;
 using AegisAI.Domain.Authorization;
@@ -16,7 +17,7 @@ public static class AuthorizationEndpoints
         return endpoints;
     }
 
-    private static IResult EvaluateModelC(EvaluationInput input, ICurrentIdentity current, IModelCAuthorizationEngine engine)
+    private static IResult EvaluateModelC(EvaluationInput input, ICurrentIdentity current, IModelCAuthorizationEngine engine, AuthorizationObservation observation)
     {
         if (current.Identity is not { } identity) return Results.Unauthorized();
         if (string.IsNullOrWhiteSpace(input.Resource) || input.Resource.Length > 256 ||
@@ -24,7 +25,7 @@ public static class AuthorizationEndpoints
             return Results.BadRequest(new { error = "Resource and action must be nonblank and at most 256 characters." });
         var request = new AuthorizationRequest(new Subject(identity.Subject, identity.Issuer),
             new Resource(input.Resource), new ResourceAction(input.Action));
-        var decision = engine.Authorize(request);
+        var decision = observation.EvaluateC(request, () => engine.Authorize(request));
         return Results.Ok(new
         {
             model = "C", outcome = decision.Outcome.ToString(), decision.Reason,
@@ -41,7 +42,7 @@ public static class AuthorizationEndpoints
         });
     }
 
-    private static IResult EvaluateModelB(EvaluationInput input, ICurrentIdentity current, IModelBAuthorizationEngine engine)
+    private static IResult EvaluateModelB(EvaluationInput input, ICurrentIdentity current, IModelBAuthorizationEngine engine, AuthorizationObservation observation)
     {
         if (current.Identity is not { } identity) return Results.Unauthorized();
         if (string.IsNullOrWhiteSpace(input.Resource) || input.Resource.Length > 256 ||
@@ -49,7 +50,7 @@ public static class AuthorizationEndpoints
             return Results.BadRequest(new { error = "Resource and action must be nonblank and at most 256 characters." });
         var request = new AuthorizationRequest(new Subject(identity.Subject, identity.Issuer),
             new Resource(input.Resource), new ResourceAction(input.Action));
-        var decision = engine.Authorize(request);
+        var decision = observation.EvaluateB(request, () => engine.Authorize(request));
         return Results.Ok(new
         {
             model = "B",
@@ -63,7 +64,7 @@ public static class AuthorizationEndpoints
         });
     }
 
-    private static IResult Evaluate(EvaluationInput input, ICurrentIdentity current, IAuthorizationEngine engine)
+    private static IResult Evaluate(EvaluationInput input, ICurrentIdentity current, IAuthorizationEngine engine, AuthorizationObservation observation)
     {
         if (current.Identity is not { } identity) return Results.Unauthorized();
         if (string.IsNullOrWhiteSpace(input.Resource) || input.Resource.Length > 256 ||
@@ -72,7 +73,7 @@ public static class AuthorizationEndpoints
 
         var request = new AuthorizationRequest(new Subject(identity.Subject, identity.Issuer),
             new Resource(input.Resource), new ResourceAction(input.Action));
-        var decision = engine.Authorize(request);
+        var decision = observation.Evaluate(request, () => engine.Authorize(request));
         return Results.Ok(new
         {
             model = "A",

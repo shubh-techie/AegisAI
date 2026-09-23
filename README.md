@@ -124,3 +124,12 @@ This is a deterministic heuristic, not AI or ML. STEP_UP/LIMIT are recommendatio
 with obligations, not implemented enforcement. See
 [SPEC-007](docs/aegisai/specs/SPEC-007-CONTEXTUAL-RISK.md) and
 [ADR-004](docs/aegisai/adr/ADR-004-RISK-ENGINE.md).
+
+## Authorization audit and observability
+
+IMPLEMENTED: one structured decision event per completed Model A/B/C API evaluation,
+with generated correlation ID, pseudonymized identifiers, outcome/reasons, optional
+risk, UTC timestamp, and processing duration. .NET ActivitySource/Meter instrumentation
+is OpenTelemetry-compatible; no exporter or Kafka is configured. Audit failures do
+not change experimental decisions. See [SPEC-008](docs/aegisai/specs/SPEC-008-AUDIT-OBSERVABILITY.md)
+for data minimization and best-effort delivery limits. Durable audit remains PLANNED.

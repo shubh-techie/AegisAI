@@ -1,9 +1,14 @@
 using AegisAI.Api.Authentication;
+using AegisAI.Api.Observability;
+using AegisAI.Application.Observability;
 using AegisAI.Api.Authorization;
 using AegisAI.Application.Identity;
 using AegisAI.Application.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Logging.AddJsonConsole(options => options.IncludeScopes = false);
+builder.Services.AddSingleton<IAuthorizationAuditSink, LoggingAuthorizationAuditSink>();
+builder.Services.AddScoped<AuthorizationObservation>();
 builder.Services.AddAegisAuthentication(builder.Configuration);
 builder.Services.AddRbacBaseline();
 builder.Services.AddAbacBaseline();
