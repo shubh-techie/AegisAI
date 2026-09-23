@@ -5,7 +5,7 @@
 Observe. Assess. Authorize. Respond.
 
 **Under development — solution foundation only.** A .NET 8 solution and minimal
-API expose `GET /health` and authenticated `GET /identity`; Model A RBAC is available through an experimental decision endpoint.
+API expose `GET /health` and authenticated `GET /identity`; Models A (RBAC) and B (RBAC + ABAC) have experimental decision endpoints.
 
 AegisAI is intended to explore adaptive authorization, contextual risk assessment,
 behavioral anomaly detection, and policy-controlled response in distributed systems.
@@ -13,11 +13,11 @@ behavioral anomaly detection, and policy-controlled response in distributed syst
 ## Status
 
 - **IMPLEMENTED**: .NET 8 Clean Architecture solution, nullable reference types,
-  health endpoint, JWT authentication, Model A RBAC, unit tests, integration tests,
+  health endpoint, JWT authentication, Models A/B authorization, unit tests, integration tests,
   architecture tests, and foundation documentation.
 - **PLANNED**: business functionality and its tests, authorization,
   risk assessment, telemetry, and deployment support.
-- **EXPERIMENTAL**: Model A RBAC baseline is implemented; no research experiments or benchmarks have run.
+- **EXPERIMENTAL**: Models A/B baselines are implemented; no research experiments or benchmarks have run.
 
 No research findings, benchmark results, datasets, or publications are claimed.
 
@@ -103,4 +103,14 @@ for the authenticated caller and returns ALLOW or DENY with a reason and policy
 version. Roles and permissions come from server configuration; the default policy
 has no grants. This experimental endpoint evaluates decisions without executing
 protected actions. See [SPEC-005](docs/aegisai/specs/SPEC-005-RBAC.md) for configuration,
-assumptions, algorithm, test scenarios, and limitations. ABAC and risk remain PLANNED.
+assumptions, algorithm, test scenarios, and limitations. Model B adds ABAC; risk remains PLANNED.
+
+## Model B — RBAC + ABAC
+
+`POST /authorization/evaluate/model-b` accepts the same resource/action request.
+It requires an RBAC grant and all applicable ABAC conditions to pass. Subject,
+resource, and environment attributes come from server configuration, never request
+attribute bags. Missing attributes or applicable rules deny. See
+[SPEC-006](docs/aegisai/specs/SPEC-006-ABAC.md) and
+[ADR-003](docs/aegisai/adr/ADR-003-POLICY-EVALUATION.md). These are experimental
+software baselines; no AI, anomaly detection, risk scoring, or research results exist.

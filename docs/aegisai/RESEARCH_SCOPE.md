@@ -21,7 +21,7 @@ AegisAI is intended to become an engineering and research platform for:
 - Policy-controlled automated threat response
 - Secure telemetry and audit trails for distributed systems
 
-The current repository does not yet implement these AegisAI capabilities. The legacy GloboTicket application is preserved in Git only and will not be reused. Model A RBAC is now implemented as an experimental software baseline; Models B–D remain PLANNED. No research experiments have run.
+The current repository does not yet implement these AegisAI capabilities. The legacy GloboTicket application is preserved in Git only and will not be reused. Models A (RBAC) and B (RBAC + ABAC) are implemented as experimental software baselines; Models C/D remain PLANNED. No research experiments have run.
 
 ## Research Questions
 
@@ -43,7 +43,7 @@ AegisAI should eventually support reproducible experiments comparing:
 - Model C: RBAC + ABAC + contextual risk
 - Model D: RBAC + ABAC + behavioral AI risk
 
-Model A has an experimental implementation described in [SPEC-005](specs/SPEC-005-RBAC.md). Models B–D remain PLANNED. None has research comparison results.
+Model A has an experimental implementation described in [SPEC-005](specs/SPEC-005-RBAC.md). Model B is implemented in [SPEC-006](specs/SPEC-006-ABAC.md); Models C/D remain PLANNED. None has research comparison results.
 
 ## Candidate Measurements
 
