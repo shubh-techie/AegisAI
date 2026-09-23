@@ -1,16 +1,18 @@
 # AegisAI Research Architecture
 
 Date: 2026-09-23  
-Status: EXPERIMENTAL plans only; no experiments executed
+Status: EXPERIMENTAL; initial synthetic engine-only smoke run executed (AEGISAI-009)
 
 IMPLEMENTED: this research design document and the software foundation described
 in [SPEC-002](../specs/SPEC-002-SOLUTION-FOUNDATION.md).
 IMPLEMENTED experimental software: [Model A RBAC](../specs/SPEC-005-RBAC.md) and
 [Model B RBAC + ABAC](../specs/SPEC-006-ABAC.md).
 IMPLEMENTED experimental software: [Model C contextual risk](../specs/SPEC-007-CONTEXTUAL-RISK.md).
-PLANNED: Model D, workloads, datasets, experiment runners, scorers, and measurements.
-No research results, benchmark values, datasets, trained models, or publications
-are claimed. These comparisons are questions to test, not evidence of improvement.
+IMPLEMENTED: [SPEC-009](../specs/SPEC-009-EXPERIMENT-FRAMEWORK.md) provides synthetic
+scenarios and an executable A–C engine-only runner. An initial smoke run is stored
+under research/results/aegisai009-smoke. It does not establish improvement.
+PLANNED: Model D, production-representative datasets, detection evaluation, full
+pipeline measurements, trained models, and publications.
 
 ## Comparison design
 
@@ -33,7 +35,7 @@ and behavioral model requires a separately named run. A heuristic behavioral rul
 must be labeled heuristic and cannot stand in for learned AI without disclosure.
 A/B may produce only ALLOW/DENY; do not invent risk scores for them.
 
-## Experiment pipeline — PLANNED
+## Experiment pipeline — target design
 
 ```mermaid
 flowchart LR
@@ -134,7 +136,9 @@ not an authorization grant or autonomous unrestricted response.
 Record source commit, dependency/runtime versions, OS/hardware, resource allocations,
 cache state, network setup, scorer artifact hash, threshold configuration, and
 instrumentation version. Label synthetic data explicitly and store its generator
-and seeds. No numeric targets or expected improvements are asserted in this task.
+and seeds. No numeric targets or expected improvements are asserted. Initial engine-only
+measurements explicitly exclude authentication, enforcement, and audit; they do not
+meet the future full-pipeline metric boundary above.
 
 ## Threats to validity
 

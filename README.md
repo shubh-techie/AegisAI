@@ -17,9 +17,11 @@ behavioral anomaly detection, and policy-controlled response in distributed syst
   architecture tests, and foundation documentation.
 - **PLANNED**: business functionality and its tests, authorization,
   risk assessment, telemetry, and deployment support.
-- **EXPERIMENTAL**: Models A/B/C baselines are implemented; no research experiments or benchmarks have run.
+- **EXPERIMENTAL**: Models A/B/C baselines are implemented; an initial synthetic engine-only smoke run has executed.
 
-No research findings, benchmark results, datasets, or publications are claimed.
+No research findings, production datasets, or publications are claimed. A synthetic
+engine-only smoke run is available for framework validation; it supports no broad
+performance claims.
 
 ## History
 
@@ -133,3 +135,11 @@ risk, UTC timestamp, and processing duration. .NET ActivitySource/Meter instrume
 is OpenTelemetry-compatible; no exporter or Kafka is configured. Audit failures do
 not change experimental decisions. See [SPEC-008](docs/aegisai/specs/SPEC-008-AUDIT-OBSERVABILITY.md)
 for data minimization and best-effort delivery limits. Durable audit remains PLANNED.
+
+## Reproducible synthetic experiments
+
+An executable A–C engine-only comparison runner, synthetic scenarios, and generated
+smoke artifacts are available. See [research/README](research/README.md) for exact
+Release build/test/run commands and [SPEC-009](docs/aegisai/specs/SPEC-009-EXPERIMENT-FRAMEWORK.md)
+for measurement boundaries. Model D and detection-quality analysis remain PLANNED.
+Smoke measurements do not establish production performance or security effectiveness.

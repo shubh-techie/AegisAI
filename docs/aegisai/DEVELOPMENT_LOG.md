@@ -243,3 +243,37 @@ and not committed.
 **PLANNED**: durable pre-action audit acceptance, authentication rejection audit,
 protected operation outcomes, retention/access controls, and deployment exporters.
 **EXPERIMENTAL**: authorization software only; no performance or research findings.
+
+## 2026-09-23 — AEGISAI-009: Reproducible authorization experiment framework
+
+Status: **IMPLEMENTED** experimental runner and generated synthetic smoke artifacts;
+working tree pending review, not committed.
+
+- Read AGENTS.md, Research Architecture, relevant A–C contracts and observability
+  specification. Began from clean branch at `bdb9656`.
+- Added net8.0 experiment console and test projects to the solution. The runner
+  invokes real A/B/C engines using eight clearly labeled synthetic scenarios.
+- Added seeded paired workloads, randomized model order, explicit warm-up and
+  measured phases, raw tick observations, decision counts, latency percentiles,
+  throughput, error accounting, environment metadata, and source/binary hashes.
+- Added exact source archives for reproducing runs against uncommitted code.
+  Model D remains PLANNED; future detection-quality interfaces have no implementation.
+- Created SPEC-009 and research/README with executable reproduction commands and
+  explicit exclusions: no HTTP, authentication, audit delivery, or enforcement timing.
+- Release build passed with zero warnings/errors. All 156 tests passed (14 Domain,
+  53 Application, 81 integration, 4 architecture, 4 experiment tests).
+- Executed the Release smoke manifest separately after tests. Generated artifacts
+  are in research/results/aegisai009-smoke: 2,400 measured calls per model, 600
+  warm-up calls per model, 9,000 observations total, zero errors.
+- Independently recomputed summary counts/latency values from raw observations and
+  checked archived source hashes against the current source. No results were edited
+  or invented. Actual measurements are in generated summary.json, not assumed here.
+- Local Markdown links passed. The solution uses existing CRLF line endings;
+  git -c core.whitespace=cr-at-eol diff --check passed without changing that source
+  snapshot. Historical commits, HEAD, and securing-microservices-legacy are unchanged. No commit or push performed.
+
+**EXPERIMENTAL**: tiny single-threaded synthetic engine-only smoke measurement;
+aggregate measured windows were under 5 ms per model. No causal comparison,
+production performance, representativeness, or security effectiveness is claimed.
+**PLANNED**: Model D, independent detection labels, false-positive/negative analysis,
+behavioral anomaly evaluation, and end-to-end measurements with durable audit.
