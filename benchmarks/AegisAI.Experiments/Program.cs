@@ -36,7 +36,7 @@ string Command(string executable, params string[] arguments)
     return result.Trim();
 }
 string Hash(byte[] bytes) => Convert.ToHexString(SHA256.HashData(bytes)).ToLowerInvariant();
-var sourceFiles = new[] { "src", "benchmarks", "tests" }.SelectMany(folder => Directory.EnumerateFiles(Path.Combine(root, folder), "*", SearchOption.AllDirectories))
+var sourceFiles = new[] { "src", "benchmarks", "tests", "deployment" }.SelectMany(folder => Directory.EnumerateFiles(Path.Combine(root, folder), "*", SearchOption.AllDirectories))
     .Where(path => !path.Split(Path.DirectorySeparatorChar).Any(part => part is "bin" or "obj") &&
         (path.EndsWith(".cs") || path.EndsWith(".csproj")))
     .Concat(new[] { "AegisAI.sln", "global.json" }.Select(file => Path.Combine(root, file))).Order().ToArray();
@@ -48,7 +48,7 @@ var metadata = new
     SchemaVersion = 1, DataKind = "SYNTHETIC", ModelD = "PLANNED — not executed",
     Boundary = "In-process engine only; excludes HTTP, authentication, audit, telemetry, and enforcement",
     Concurrency = 1, WorkloadMode = "Sequential closed loop; no fixed arrival rate", StartedUtc = DateTimeOffset.UtcNow,
-    GitCommit = Command("git", "rev-parse", "HEAD"), SourceWorkingTreeDirty = Command("git", "status", "--porcelain", "--", "src", "benchmarks", "tests", "AegisAI.sln", "global.json", "research/experiments").Length > 0,
+    GitCommit = Command("git", "rev-parse", "HEAD"), SourceWorkingTreeDirty = Command("git", "status", "--porcelain", "--", "src", "benchmarks", "tests", "deployment", "AegisAI.sln", "global.json", "research/experiments").Length > 0,
     Sdk = Command("dotnet", "--version"), Runtime = RuntimeInformation.FrameworkDescription,
     OS = RuntimeInformation.OSDescription, Architecture = RuntimeInformation.ProcessArchitecture.ToString(),
     LogicalProcessors = Environment.ProcessorCount, AvailableMemoryBytes = GC.GetGCMemoryInfo().TotalAvailableMemoryBytes,

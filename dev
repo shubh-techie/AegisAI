@@ -1,0 +1,37 @@
+#!/bin/sh
+set -eu
+cd "$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+export LOCAL_UID="$(id -u)" LOCAL_GID="$(id -g)"
+compose() { docker compose -f deployment/docker/compose.yaml "$@"; }
+tool() { compose run --rm --no-deps tools dotnet run --project deployment/docker/AegisAI.DevTools -- "$@"; }
+case "${1:-help}" in
+  up)
+    mkdir -p deployment/docker/.local research/results
+    compose build api tools
+    tool init /local
+    compose up -d --force-recreate api
+    attempt=0
+    until tool health http://api:8080; do
+      attempt=$((attempt + 1))
+      if [ "$attempt" -ge 10 ]; then compose logs --tail=50 api; exit 1; fi
+      sleep 1
+    done
+    ;;
+  health) tool health http://api:8080 ;;
+  demo) tool demo http://api:8080 /local/token ;;
+  logs) compose logs --tail=100 -f api ;;
+  test)
+    mkdir -p deployment/docker/.local research/results
+    compose build tools
+    compose run --rm --no-deps tools dotnet test AegisAI.sln -c Release
+    ;;
+  experiment)
+    run_name="${2:-smoke-$(date -u +%Y%m%dT%H%M%SZ)}"
+    case "$run_name" in *[!a-zA-Z0-9_-]*|'') echo 'Use a new run name containing letters, digits, hyphens or underscores.' >&2; exit 2 ;; esac
+    mkdir -p deployment/docker/.local research/results
+    compose build tools
+    compose run --rm --no-deps tools dotnet run --project benchmarks/AegisAI.Experiments -c Release -- --manifest research/experiments/smoke-v1.json --output "research/results/$run_name"
+    ;;
+  down) compose down ;;
+  *) echo 'Usage: ./dev up | health | demo | logs | test | experiment [new-run-name] | down' ;;
+esac

@@ -277,3 +277,45 @@ aggregate measured windows were under 5 ms per model. No causal comparison,
 production performance, representativeness, or security effectiveness is claimed.
 **PLANNED**: Model D, independent detection labels, false-positive/negative analysis,
 behavioral anomaly evaluation, and end-to-end measurements with durable audit.
+
+## 2026-09-23 — AEGISAI-010: V0.1 development environment
+
+Status: **IMPLEMENTED** workflow and experimental local fixtures; working tree
+pending review, not committed. Docker runtime acceptance remains pending.
+
+- Read AGENTS.md and reviewed task 001–009 specifications, architecture, ADRs,
+  project history, development records, and implemented API/experiment contracts.
+  Began from clean feature/aegisai-foundation at ecb9649.
+- Added a non-root runtime Dockerfile, Compose API plus on-demand SDK/Git tools,
+  build-context exclusions, isolated temporary build workspaces, and root ./dev
+  commands for startup, health, A/B/C demo, logs, tests, experiments and shutdown.
+- Added offline synthetic one-hour RS256 credentials with discarded private keys.
+  The API receives only public trust, requires Development and exclusive local
+  configuration, and keeps standard JWT checks. Domain/Application are unchanged.
+  Added ADR-005 documenting the narrow local tooling exception to ADR-002.
+- Added SPEC-010, concise Quick Start and V01_READINESS report; clarified current
+  IMPLEMENTED/EXPERIMENTAL/PLANNED status and retained Model D as PLANNED.
+- Included deployment C# projects in experiment archives so the expanded solution
+  remains rebuildable from its recorded source snapshot. No secrets are archived.
+- Initial local-trust integration test caught configuration read before test-host
+  providers finalized; deferred option configuration and startup resolution fixed it.
+  Final dotnet build passed with zero warnings/errors; all 168 tests passed:
+  14 Domain, 53 Application, 93 integration, 4 architecture, 4 experiments.
+- Actual local HTTP smoke passed health, anonymous rejection, A/B ALLOW, C STEP_UP
+  at score 0.300 and forbidden-write DENY. Verified four audit events/correlation
+  IDs and absence of the generated token in captured logs. Stopped the temporary API.
+- Docker/Compose clients exist and Compose/shell syntax validation passed. Attempted
+  Docker build; the daemon socket was absent, so no container build/startup success
+  is claimed. The readiness report explicitly tracks this validation gap.
+- Ran a separate executable local Release smoke experiment under
+  research/results/aegisai010-local-smoke; actual generated artifacts are retained.
+  This is synthetic execution validation, not a performance claim.
+- Verified 9,000 raw observations, 2,400 measured decisions per model with zero
+  errors, and exact source archive contents including DevTools and excluding local
+  credentials. Local Markdown links, shell/Compose syntax, and CRLF-aware diff
+  whitespace validation passed; HEAD and the legacy checkpoint remain unchanged.
+- No commit, push, historical rewrite, or legacy tag change performed.
+
+**PLANNED**: container runtime acceptance, production provider/context integration,
+protected-operation enforcement, durable audit and behavioral AI/ML.
+**EXPERIMENTAL**: local synthetic authorization exploration and engine-only smoke.

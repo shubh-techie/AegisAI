@@ -1,0 +1,31 @@
+name: aegisai-local
+services:
+  api:
+    build:
+      context: ../..
+      dockerfile: deployment/docker/Dockerfile
+      target: api
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    ports:
+      - "127.0.0.1:${AEGISAI_PORT:-5080}:8080"
+    volumes:
+      - ./.local/appsettings.Development.json:/app/appsettings.Development.json:ro
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+  tools:
+    profiles: [tools]
+    build:
+      context: ../..
+      dockerfile: deployment/docker/Dockerfile
+      target: tools
+    user: "${LOCAL_UID:-1000}:${LOCAL_GID:-1000}"
+    volumes:
+      - ../..:/repository:ro
+      - ../../research/results:/results
+      - ./.local:/local
