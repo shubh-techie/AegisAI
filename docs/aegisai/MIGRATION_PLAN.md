@@ -1,5 +1,9 @@
 # Foundation and Development Plan
 
+Historical AEGISAI-001 planning snapshot. Later implementation and synthetic smoke
+artifacts are recorded in [DEVELOPMENT_LOG](DEVELOPMENT_LOG.md) and
+[V01_READINESS](V01_READINESS.md); statuses below describe the foundation task.
+
 The earlier proposal to upgrade and reuse GloboTicket is superseded by
 AEGISAI-001. AegisAI starts with a fresh implementation. Historical source remains
 available at `securing-microservices-legacy` only.

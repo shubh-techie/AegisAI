@@ -2,8 +2,9 @@
 
 Date: 2026-09-23  
 Assessment: **Ready for code review as an experimental local development baseline.**
-Docker runtime acceptance remains pending because the available Docker client has
-no running daemon. This is not a production-readiness or security certification.
+Docker startup and /health are now validated as recorded below. Full container
+workflow acceptance remains separate. This is not a production-readiness or
+security certification.
 
 ## Implemented capabilities and review
 
@@ -19,6 +20,7 @@ no running daemon. This is not a production-readiness or security certification.
 | 008 | Structured minimized audit, correlation headers, ActivitySource/Meter instrumentation |
 | 009 | Seeded synthetic A–C experiments, raw observations, summaries and source provenance |
 | 010 | Docker files, root ./dev workflow, temporary Development-only credentials, Quick Start |
+| 011 | CI for PRs targeting main and pushes to main; repository security review and local Release validation |
 
 **IMPLEMENTED** describes repository code and documented validation. Models A–C,
 static context fixtures, and measurements remain **EXPERIMENTAL**. Behavioral
@@ -38,10 +40,16 @@ AI/ML, Model D, live anomaly detection and detection-quality analysis are **PLAN
   forbidden write DENY. Four JSON authorization events matched the requests and
   correlation IDs; the generated token was absent from captured server logs.
   This was a local .NET host, not a container test. The temporary host was stopped.
-- Shell syntax and `docker compose ... config --quiet` passed. Container build was
-  attempted with Docker/Compose installed but failed because the daemon socket
-  was absent. Image build, Linux runtime startup, mount permissions and the full
-  `./dev` container workflow have **not** been runtime-validated here.
+- At AEGISAI-010, shell/Compose checks passed but Docker startup could not be
+  validated because the daemon was unavailable. At AEGISAI-011 final verification,
+  the user reported successful API container startup, listening on port 8080,
+  and GET /health HTTP 200. A fresh ./dev health also passed with healthy JSON.
+  The tools container reported a workload-verification warning. Full container
+  demo/test/experiment acceptance was not rerun in this final task.
+- AEGISAI-011 final verification ran the exact dotnet restore, dotnet build
+  --configuration Release, and dotnet test --configuration Release commands:
+  restore/build passed, zero build warnings/errors, 168 tests passed, zero
+  failed/skipped. See [SPEC-011](specs/SPEC-011-CI-SECURITY.md).
 - A separate local Release smoke experiment generated
   [actual artifacts](../../research/results/aegisai010-local-smoke/summary.json).
   This validates execution/provenance, not performance or production effectiveness.
@@ -56,6 +64,12 @@ The service topology is one API, with an on-demand SDK/Git tools container. No
 broker, database, identity server, collector, or gateway was introduced.
 
 ## Known limitations
+
+The user observed development Data Protection warnings about ephemeral/in-memory
+key storage. No durable Data Protection key store is configured; protected data
+depending on these keys may not survive a restart. Production key persistence,
+protection, and sharing require separate design. This is distinct from JWT signing
+trust and does not make the local Docker configuration production-ready.
 
 Decision queries do not execute protected actions. STEP_UP and LIMIT obligations
 are recommendations; no challenge or rate-cap enforcement exists. Policies and
@@ -84,10 +98,10 @@ interfaces do not constitute implemented detection or quality measurement.
 
 ## Next recommended work
 
-1. Start a Docker daemon and run the complete Quick Start, including tests and
-   experiment reproduction; record Linux image/runtime validation before V0.1 acceptance.
-2. Add CI for build/tests/container smoke; adopt reviewed image digests and package
-   locks if byte-stable supply-chain reproduction becomes a requirement.
+1. Complete and record the remaining container demo/test/experiment acceptance;
+   startup and /health alone establish liveness only.
+2. Observe the updated CI on GitHub; container smoke CI remains future work.
+   Consider reviewed image digests and package locks for stronger provenance.
 3. Specify protected-resource enforcement with mandatory STEP_UP/LIMIT handling
    and durable audit acceptance before implementing real resource operations.
 4. Validate a real identity provider and context provenance/freshness adapters.

@@ -354,3 +354,48 @@ Status: **IMPLEMENTED** in working tree; pending review, not committed.
 
 **PLANNED**: hosted PR validation, owner-managed merge/security settings, and
 confirmation of historical credential revocation. **EXPERIMENTAL**: no new runs.
+
+## 2026-09-23 — AEGISAI-011-FINAL: CI/security verification and review readiness
+
+Status: **IMPLEMENTED** final changes in working tree; pending review, not committed.
+
+- Read AGENTS.md, development log, SPEC-011, and CI before inspecting status,
+  branch, and the last ten commits. Started on ci/github-actions at 3b98497.
+  Preserved the pre-existing untracked research/results/local-validation/ directory.
+- Established CI coverage for both pull requests targeting main and pushes to main.
+  Retained checkout, .NET 8, restore, Release build, all tests, failure propagation,
+  contents: read only, and disabled credential persistence. Switched official
+  actions to checkout@v6 and setup-dotnet@v5 per the requested major-pin preference;
+  documented their mutable-tag limitation. No third-party action or secrets added.
+- Executed dotnet restore, dotnet build --configuration Release, and dotnet test
+  --configuration Release on macOS arm64, SDK 8.0.204. Restore and build passed,
+  zero build warnings/errors; 168 tests executed and passed, zero failed/skipped:
+  14 Domain, 53 Application, 93 integration, 4 architecture, 4 experiments.
+  Passing invalid-request tests emitted BadHttpRequestException developer error
+  logs; local Data Protection informational logs noted unencrypted profile storage.
+- Recorded user-observed Docker startup, ASP.NET Core listening on 8080, and
+  GET /health HTTP 200. A fresh ./dev health succeeded with healthy JSON. Tools
+  emitted a workload-verification warning; it did not block the health check.
+  Optional demo and ci-validation experiment were not rerun.
+- Recorded user-observed ephemeral/in-memory Data Protection warnings as a V0.1
+  development limitation: no durable key store is configured, so dependent
+  protected payloads may not survive restarts. No production-readiness claim.
+- Scanned 258 tracked text files/archive members for obvious credential patterns:
+  zero candidates. Verified root/nested .env, .env.*, .idea/, .DS_Store, bin/, obj/
+  exclusion and .env.example inclusion. No .gitignore change required. Historical
+  credential revocation remains unverified; no full-history audit was performed.
+- Reviewed research claims: A/B/C supporting code is IMPLEMENTED, behavioral/AI
+  Model D is PLANNED, and runner/synthetic artifacts are EXPERIMENTAL. No unsupported
+  superiority, independent adoption, or production-readiness claim was found.
+  Corrected stale no-results statements in research/architecture summaries and
+  labeled the migration plan as a historical snapshot. Updated V01_READINESS and
+  SPEC-011 with current CI, local validation, Docker evidence, and limitations.
+- Workflow structure, ignore checks, local documentation links/fences, shell/Compose
+  syntax, and git diff --check passed. Hosted execution of the updated CI and
+  repository merge/security settings were not verified; actionlint unavailable.
+- No application behavior changed. No commit, push, merge, rebase, history rewrite,
+  branch deletion, or legacy-tag change performed; main remains unchanged.
+
+**PLANNED**: hosted CI observation, owner-managed required checks/security settings,
+historical credential revocation confirmation, production key management.
+**EXPERIMENTAL**: existing framework/artifacts only; no new research run in this task.

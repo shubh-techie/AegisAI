@@ -8,7 +8,10 @@ This document describes the intended AegisAI architecture. It is a target direct
 request flow and enforcement semantics. [Research Architecture](architecture/RESEARCH_ARCHITECTURE.md)
 separately defines future behavioral anomaly detection and Models A–D.
 [Threat Model V1](threat-model/THREAT_MODEL_V1.md) records proposed controls.
-Authentication and experimental Models A/B/C are implemented; the remaining target capabilities are PLANNED. No research experiments have run.
+Authentication, Models A/B/C, and best-effort audit are IMPLEMENTED. The runner and
+synthetic engine-only smoke artifacts are EXPERIMENTAL; see
+[SPEC-009](specs/SPEC-009-EXPERIMENT-FRAMEWORK.md). Behavioral/AI Model D,
+durable audit, and protected-operation enforcement remain PLANNED.
 
 ## Target Flow
 
@@ -54,7 +57,7 @@ Planned components:
   - Feeds research datasets and operational dashboards.
   - Supports incident analysis and automated response.
 
-The experimental Model A RBAC engine is implemented; see [SPEC-005](specs/SPEC-005-RBAC.md). Model B adds ABAC in [SPEC-006](specs/SPEC-006-ABAC.md); Model C adds deterministic risk in [SPEC-007](specs/SPEC-007-CONTEXTUAL-RISK.md); audit and full enforcement remain PLANNED.
+The experimental Model A RBAC engine is implemented; see [SPEC-005](specs/SPEC-005-RBAC.md). Model B adds ABAC in [SPEC-006](specs/SPEC-006-ABAC.md); Model C adds deterministic risk in [SPEC-007](specs/SPEC-007-CONTEXTUAL-RISK.md). Best-effort audit is implemented; durable audit and full enforcement remain PLANNED.
 
 ## Potential Technology Direction
 
@@ -71,7 +74,10 @@ Target technologies:
 - Docker Compose
 - Kubernetes later
 
-These technologies are PLANNED candidates; .NET 8 is the required .NET target. The .NET 8 foundation, authentication, and Model A RBAC with an in-memory policy snapshot are implemented; external infrastructure integrations remain PLANNED.
+These are technology directions. .NET 8, Docker Compose development tooling, and
+OpenTelemetry-compatible instrumentation exist; other external infrastructure
+integrations remain PLANNED. See the current
+[readiness report](V01_READINESS.md) for evidence and limitations.
 
 ## Target Service Boundaries
 
@@ -112,4 +118,6 @@ Future observability should capture:
 - Security event correlation IDs.
 - Response action and outcome.
 
-OpenTelemetry is a target direction, not an existing implementation.
+OpenTelemetry-compatible ActivitySource/Meter instrumentation and console audit
+are implemented in [SPEC-008](specs/SPEC-008-AUDIT-OBSERVABILITY.md).
+Exporters and durable audit remain PLANNED.
