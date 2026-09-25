@@ -6,6 +6,12 @@ Status: IMPLEMENTED documentation; system capabilities PLANNED
 
 ## Scope and evidence
 
+Historical AEGISAI-003 task scope: implementation/status statements below record
+that task's completion, not the current repository. Models A–C, authentication,
+best-effort audit and the synthetic runner now exist. AEGISAI-012 updates only the
+research contract below; see [Research Models](../research/RESEARCH_MODELS.md)
+for current scope and evidence. All other original task criteria remain historical.
+
 AegisAI — Adaptive Intelligence for Secure Distributed Systems.
 Observe. Assess. Authorize. Respond.
 
@@ -65,11 +71,14 @@ claimed by this documentation task.
 | Model A | RBAC |
 | Model B | RBAC + ABAC |
 | Model C | RBAC + ABAC + contextual risk |
-| Model D | RBAC + ABAC + behavioral AI risk |
+| Model D | Policy-bounded behavioral adaptive authorization — PLANNED RESEARCH |
 
-Model D does not silently add Model C's contextual scorer. Any combined scorer is
-a separately named experiment. All variants share authentication, enforcement,
-workload, and measurement boundaries.
+AEGISAI-012 supersedes the original scorer-replacement requirement: Model D is
+the proposed combined contextual, behavioral and operational architecture with
+bounded responses and feedback. Exact scoring remains unspecified; every variant
+must declare its features, configuration and ablations. Future full-pipeline
+comparisons share authentication, enforcement, workload and measurement boundaries.
+The existing A–C runner is engine-only and does not include enforcement.
 
 Intended metrics: authorization latency, throughput, false-positive rate,
 false-negative rate, risk classification, detection time, and response time.

@@ -3,6 +3,13 @@
 Date: 2026-09-23  
 Status: IMPLEMENTED experimental baseline; pending review
 
+AEGISAI-012 clarification (2026-09-25): this specification records the AEGISAI-005
+task scope. Statements about absent later models, tooling or measurements describe
+that historical task, not the current repository. Models A–C, best-effort audit,
+local synthetic credential tooling and the A–C engine-only runner now exist;
+Model D, behavioral ML, durable audit and protected-operation enforcement remain
+PLANNED. See [Research Models](../research/RESEARCH_MODELS.md) for current evidence.
+
 ## Scope and evidence
 
 Model A = RBAC. This task adds a deterministic role-based decision engine and an

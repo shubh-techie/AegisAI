@@ -399,3 +399,56 @@ Status: **IMPLEMENTED** final changes in working tree; pending review, not commi
 **PLANNED**: hosted CI observation, owner-managed required checks/security settings,
 historical credential revocation confirmation, production key management.
 **EXPERIMENTAL**: existing framework/artifacts only; no new research run in this task.
+
+## 2026-09-25 — AEGISAI-012: Research Definition and Hypothesis Baseline
+
+Status: **IMPLEMENTED** research-definition documentation in working tree;
+pending review, not committed. Model D remains **PLANNED RESEARCH**.
+
+- Read AGENTS.md, development log, project history, research/system architecture,
+  relevant specifications/ADRs, Models A–C and the experiment framework; inspected
+  status, branch and Git history before editing. Started from clean ci/github-actions
+  at 98572c0; created research/aegisai-research-definition from that commit because
+  the requested branch did not exist locally. No edits were made on main.
+- Established the umbrella AI-Driven Automation for Resilient & Secure
+  Cloud/Distributed Systems, with AegisAI as its experimental platform and
+  explainable, policy-bounded, adaptive security as its research focus.
+- Added eleven documents under research/ within docs/aegisai: research problem,
+  primary question/RQ1–RQ4, Models A–D definitions, H1–H4, proposed contribution,
+  conceptual model, variables/metrics, claims register, invention candidates,
+  research-program relationship and research-integrity requirements.
+- Defined H1 behavioral effectiveness, H2 policy-bounded safety, H3 operational
+  resilience and H4 performance trade-off as unproven. Recorded independent-label,
+  comparator/ablation, metric-definition and pre-experiment threshold requirements.
+  Blast-radius meaning and acceptable performance thresholds remain unresolved.
+- Recorded no invention/novelty claim for RBAC, ABAC, Zero Trust, risk-based
+  authorization, anomaly detection, ML, autonomous incident response or feedback.
+  The working invention title and five mechanisms are candidates only; prior-art
+  and patent-counsel reviews have not established novelty or patentability.
+- Corrected the conflicting earlier Model D scorer-replacement definition in the
+  research architecture and SPEC-003, explicitly recording its supersession.
+  Aligned Research Scope and linked the baseline/claims register from README.
+- Corrected the threat model's stale health-only implementation statement and
+  qualified SPEC-003/005/006/007 status statements as historical task scopes.
+  Current code has A–C and a synthetic engine-only runner, not behavioral detection,
+  operational-state ingestion, protected-operation enforcement or a feedback loop.
+  STEP_UP/LIMIT remain recommendations with obligations; C's inputs are simulated.
+- Validation on macOS arm64, .NET SDK 8.0.204: dotnet restore passed; dotnet build
+  --configuration Release passed with zero warnings/errors; dotnet test
+  --configuration Release passed all 168 tests (14 Domain, 53 Application,
+  93 integration/security, 4 architecture, 4 experiments), zero failed/skipped.
+  A sandbox restore stalled and was terminated; the exact required commands then
+  completed with approved tooling access. Integration output included the existing
+  local Data Protection profile-storage informational messages.
+- Documentation validation passed: required files, RQ/H headings, claims-table
+  structure, local Markdown link targets, code fences and whitespace. Mermaid was
+  inspected as source, not renderer-tested. Final status, diff stat and diff check
+  were reviewed; untracked new documents were checked separately because ordinary
+  git diff does not include them.
+- Application source, tests, experiment configuration and results are unchanged.
+  HEAD remains 98572c0, main remains 3b98497, and the legacy tag still resolves to
+  b9518fa. No commit, push, merge, rebase, historical rewrite or tag change.
+
+**EXPERIMENTAL**: existing synthetic A–C artifacts only; no new research run or
+experimental validation of H1–H4. **PLANNED**: precise confirmatory protocols,
+literature/prior-art review, Model D and evaluation of the proposed contribution.
