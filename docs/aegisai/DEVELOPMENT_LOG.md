@@ -452,3 +452,47 @@ pending review, not committed. Model D remains **PLANNED RESEARCH**.
 **EXPERIMENTAL**: existing synthetic A–C artifacts only; no new research run or
 experimental validation of H1–H4. **PLANNED**: precise confirmatory protocols,
 literature/prior-art review, Model D and evaluation of the proposed contribution.
+
+## 2026-09-25 — AEGISAI-012 Documentation Completion
+
+Task: AEGISAI-012-DOC-COMPLETION. Status: **IMPLEMENTED** documentation in working
+tree; pending review, not committed. Model D remains **PLANNED RESEARCH**.
+
+- Started from clean docs/aegisai-012-completion at ff37d4b. Read AGENTS.md,
+  development/history records and all canonical research, specification and ADR
+  files before editing. Specifications ended at SPEC-011; ADRs ended at ADR-005.
+- The AEGISAI-012 baseline was already committed as c8e6112, merged in ff37d4b,
+  and tagged research-baseline-v0.1. The tag object remains
+  e34b35e5198835a82e08e6008df713697d769e14 and resolves to ff37d4b.
+- Created [SPEC-012](specs/SPEC-012-RESEARCH-DEFINITION.md), referencing canonical
+  research definitions and recording status boundaries and AC1–AC14. Literature/
+  prior-art analysis is the next research gate, not a completed analysis.
+- Created [ADR-006](adr/ADR-006-POLICY-BOUNDED-ADAPTIVE-SECURITY.md) to record
+  probabilistic behavioral evidence under deterministic policy authority. ADR-004
+  covers deterministic Model C, not future probabilistic components; ADR-005 is
+  local development trust. Neither needed replacement or a duplicated decision.
+- SPEC-012 and ADR-006 were absent from the original research commit and tagged
+  state. This completion follows that milestone; no claim is made that these
+  files existed in the baseline. Both documents distinguish earlier A–C smoke
+  artifacts from the still-planned Model D comparative experiments and results.
+- Canonical RQ1–RQ4, H1–H4 and all eleven research files remain byte-identical to
+  research-baseline-v0.1. The research question and proposed contribution were
+  not changed or expanded. The original AEGISAI-012 log entry was not rewritten.
+- No research results, experiments, Model D implementation or production behavior
+  changes were introduced. Existing source, tests, configuration and result
+  artifacts remain unchanged. Expected ADR benefits are unvalidated design aims.
+- Validation: dotnet build --configuration Release passed with zero warnings/errors;
+  dotnet test --configuration Release passed 168 tests (14 Domain, 53 Application,
+  93 integration/security, 4 architecture, 4 experiments), zero failed/skipped,
+  using approved .NET tooling access on macOS arm64 with SDK 8.0.204.
+- No dedicated documentation/link-check tooling was found. Local Markdown links,
+  balanced fences, AC1–AC14 structure, canonical-file equality and historical
+  absence checks passed. Removed trailing whitespace in the new metadata blocks;
+  final git diff --check and separate new-file whitespace checks passed.
+- Reviewed final status and diff stat; the new SPEC/ADR are untracked and therefore
+  excluded from ordinary git diff statistics. Only this log and the two new
+  documents changed. HEAD and all three tag references remain unchanged.
+  No commit, push, merge, amend, rebase, tag move or history rewrite performed.
+
+**EXPERIMENTAL**: existing A–C synthetic artifacts only; no new research evidence.
+**PLANNED**: literature-gap/prior-art review and subsequent Model D research.
