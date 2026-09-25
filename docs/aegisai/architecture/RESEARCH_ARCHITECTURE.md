@@ -14,6 +14,11 @@ under research/results/aegisai009-smoke. It does not establish improvement.
 PLANNED: Model D, production-representative datasets, detection evaluation, full
 pipeline measurements, trained models, and publications.
 
+AEGISAI-012 (2026-09-25) establishes the [research-definition baseline](../research/RESEARCH_PROGRAM.md),
+[RQ1–RQ4](../research/RESEARCH_QUESTION.md), [H1–H4](../research/RESEARCH_HYPOTHESES.md),
+and [claims register](../research/CLAIMS_REGISTER.md). These supersede the earlier
+Model D scope below without changing A–C or existing experimental artifacts.
+
 ## Comparison design
 
 | Model | Definition | Variable under study |
@@ -21,18 +26,20 @@ pipeline measurements, trained models, and publications.
 | A | RBAC | Role-based baseline |
 | B | RBAC + ABAC | Additional attribute policies |
 | C | RBAC + ABAC + contextual risk | Explicit contextual risk scoring |
-| D | RBAC + ABAC + behavioral AI risk | Learned behavioral risk evidence |
+| D | Policy-bounded behavioral adaptive authorization (PLANNED RESEARCH) | Behavioral/operational evidence, evolving risk state and bounded feedback |
 
-All models use the same authentication, resource semantics, role assignments,
+Future full-pipeline comparisons must use the same authentication, resource semantics, role assignments,
 workload split, enforcement, audit requirements, instrumentation, and compute
 budget. Unused stages are explicitly disabled. B, C, and D share ABAC policies;
 C and D share hard authorization constraints. A receives only RBAC policy inputs.
 Every variant still produces an auditable policy decision.
 
-Model D replaces C's contextual scorer; it is not implicitly C plus AI. Declare
-D's features and any overlap with contextual attributes. A combined contextual
-and behavioral model requires a separately named run. A heuristic behavioral rule
-must be labeled heuristic and cannot stand in for learned AI without disclosure.
+AEGISAI-012 supersedes the earlier requirement that Model D replace C's contextual
+scorer. D now denotes the proposed combined policy-bounded architecture in
+[Research Models](../research/RESEARCH_MODELS.md); exact scoring, features and
+contextual overlap remain to be specified. Name and version every run variant,
+including behavioral/operational ablations and the separate direct-ML comparator.
+A heuristic behavioral rule must be labeled heuristic and cannot stand in for learned AI without disclosure.
 A/B may produce only ALLOW/DENY; do not invent risk scores for them.
 
 ## Experiment pipeline — target design
@@ -43,7 +50,7 @@ flowchart LR
     Workload --> A[Model A: RBAC]
     Workload --> B[Model B: RBAC + ABAC]
     Workload --> C[Model C: RBAC + ABAC + contextual risk]
-    Workload --> D[Model D: RBAC + ABAC + behavioral AI risk]
+    Workload --> D[Model D: policy-bounded adaptive authorization - PLANNED]
     A --> Measurements[Common measurement boundaries]
     B --> Measurements
     C --> Measurements

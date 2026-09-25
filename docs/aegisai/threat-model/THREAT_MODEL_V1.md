@@ -7,9 +7,12 @@ Status: PLANNED controls and verification; IMPLEMENTED documentation
 
 This model covers the target request, decision, enforcement, audit, and future
 behavioral research pipelines in [SPEC-003](../specs/SPEC-003-AEGISAI-ARCHITECTURE.md).
-The actual implementation currently exposes only GET /health and contains no
-authentication, business resources, risk scorer, or deployed security controls.
-Foundation tests do not demonstrate mitigation of the threats listed here.
+At AEGISAI-012 review, the implementation includes JWT authentication, Models A–C
+decision endpoints, deterministic risk scoring and best-effort observability.
+Protected business resources, enforcement, durable audit and Model D remain
+PLANNED. See [Research Models](../research/RESEARCH_MODELS.md) for current evidence.
+The register below retains proposed controls and verification; baseline tests
+do not demonstrate complete mitigation of these threats.
 
 The design assumes an untrusted client/network and potentially compromised user
 or service credentials. Operators and research contributors can make mistakes or

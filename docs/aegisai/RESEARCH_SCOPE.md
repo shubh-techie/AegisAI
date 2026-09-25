@@ -30,14 +30,15 @@ Model C is deterministic contextual risk, not learned AI; see
 
 ## Research Questions
 
-Initial research questions:
+AEGISAI-012 establishes the primary question:
 
-- How much latency does adaptive authorization add compared with simple RBAC?
-- Which contextual signals improve authorization decisions without creating excessive false positives?
-- Can behavioral signals detect suspicious distributed-system activity before a traditional rule would trigger?
-- How should a policy engine choose between `ALLOW`, `DENY`, `STEP_UP`, and `LIMIT` outcomes?
-- What telemetry is required to explain and audit adaptive security decisions?
-- How can automated response reduce incident response time without causing harmful overreaction?
+> How does explainable, policy-bounded, closed-loop adaptive authorization perform relative to RBAC, ABAC, and deterministic risk-aware authorization under behavioral and operational anomalies in cloud-native distributed systems?
+
+[RQ1–RQ4](research/RESEARCH_QUESTION.md) cover security effectiveness, policy safety,
+resilience and system cost. [H1–H4](research/RESEARCH_HYPOTHESES.md) remain unproven.
+The [research program](research/RESEARCH_PROGRAM.md) indexes the problem, proposed
+contribution, conceptual model, variables, invention candidates and integrity rules.
+Consult the [claims register](research/CLAIMS_REGISTER.md) before public claims.
 
 ## Planned Experimental Models
 
@@ -46,7 +47,7 @@ AegisAI should eventually support reproducible experiments comparing:
 - Model A: RBAC
 - Model B: RBAC + ABAC
 - Model C: RBAC + ABAC + contextual risk
-- Model D: RBAC + ABAC + behavioral AI risk
+- Model D: policy-bounded behavioral adaptive authorization — PLANNED RESEARCH
 
 Model A is implemented in [SPEC-005](specs/SPEC-005-RBAC.md), Model B in
 [SPEC-006](specs/SPEC-006-ABAC.md), and Model C in

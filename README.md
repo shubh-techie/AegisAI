@@ -171,3 +171,12 @@ smoke artifacts are available. See [research/README](research/README.md) for exa
 Release build/test/run commands and [SPEC-009](docs/aegisai/specs/SPEC-009-EXPERIMENT-FRAMEWORK.md)
 for measurement boundaries. Model D and detection-quality analysis remain PLANNED.
 Smoke measurements do not establish production performance or security effectiveness.
+
+## Research definition
+
+AEGISAI-012 defines the [research program](docs/aegisai/research/RESEARCH_PROGRAM.md),
+[primary question and RQ1–RQ4](docs/aegisai/research/RESEARCH_QUESTION.md), and
+[unproven H1–H4](docs/aegisai/research/RESEARCH_HYPOTHESES.md). Model D remains
+PLANNED RESEARCH. The proposed contribution is subject to literature and prior-art
+review; no effectiveness, novelty or patentability is established. Consult the
+[claims register](docs/aegisai/research/CLAIMS_REGISTER.md) before public claims.
